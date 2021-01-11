@@ -49,9 +49,8 @@ public class RideOfferController {
             // try to reserve space for each segment of the ride
             ret = dispatchPathSegment(path.get(i), path.get(i+1), date);
             if (!ret){
-
+                // TODO - to implement
             }
-
         }
         return resposne;
     }
@@ -70,6 +69,7 @@ public class RideOfferController {
     }
 
     boolean saveSpot(String destCity, Date date){
+        // TODO: to implement
         return false;
     }
 

@@ -61,20 +61,21 @@ public class ServerCommService extends ServerCommGrpc.ServerCommImplBase {
     }
     
     
-    private void updateVacancies(Date date, RideOffer newRideOffer){
+    private void updateVacancies(Date date, RideOffer newRideOffer, int diff){
         ConcurrentMap<RideOffer, Integer> currVacanciesOnDate = ridesVacancies.get(date);
-        currVacanciesOnDate.put(newRideOffer, currVacanciesOnDate.get(newRideOffer) - 1 );
+        currVacanciesOnDate.put(newRideOffer, currVacanciesOnDate.get(newRideOffer) + diff);
         ridesVacancies.put(date, currVacanciesOnDate);
     }
 
     @Override
     public void askRide(RideRequest req, StreamObserver<RideOffer> responseObserver) {
+        // TODO: handle response
         Date date = convertTimestampToDate(req.getDate());
         if (!rides.containsKey(date)){
             return;
         }
 
-        Boolean flag = false;
+        Boolean flagFound = false;
         ConcurrentMap<RideOffer, Integer> freePlaces = ridesVacancies.get(date);
         Map<String, City> allCitiesMap = cityRepository.getAllCities();
         for (Map.Entry<RideOffer, Integer> entry : freePlaces.entrySet()){
@@ -91,16 +92,16 @@ public class ServerCommService extends ServerCommGrpc.ServerCommImplBase {
                     }
                 }
 
-                updateVacancies(date, possibleRide);
+                updateVacancies(date, possibleRide, -1);
                 Timestamp timestamp = new Timestamp(System.currentTimeMillis());
                 rideRequests.put(req, new Pair<RideOffer, Timestamp>(possibleRide, timestamp));
-                flag = true;
+                flagFound = true;
                 responseObserver.onNext(possibleRide);
                 break;
             }
         }
 
-        if (!flag && req.getRecursive()){
+        if (!flagFound && req.getRecursive()){
             for (String cityName : cityRepository.getAllCities().keySet()){
                 RideRequest new_req = RideRequest.newBuilder()
                                     .setRecursive(false)
@@ -137,9 +138,10 @@ public class ServerCommService extends ServerCommGrpc.ServerCommImplBase {
         }
         else{
             // else- abort
-           RideOffer rideOffer = match.getKey();
-           ridesVacancies.get(date).remove(req);
-           rides.remove(req);
+            RideOffer rideOffer = match.getKey();
+            ridesVacancies.get(date).remove(req);
+            rides.remove(req);
+            updateVacancies(date, rideOffer, 1);
         }
 
         responseObserver.onCompleted();

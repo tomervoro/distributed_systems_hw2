@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Objects;
+import java.util.List;
 
 @AllArgsConstructor
 public class City {
@@ -12,15 +13,15 @@ public class City {
     @Getter @Setter private long y;
     @Getter @Setter private String name;
     @Getter @Setter private long id;
-    @Getter @Setter private int port;
+    @Getter @Setter private List<Integer> ports;
 
     private static long cityCount = 0;
-    public City(long x, long y, String name, int port) {
+    public City(long x, long y, String name, List<Integer> ports) {
         this.x = x;
         this.y = y;
         this.name = name;
         this.id = cityCount++;
-        this.port = port;
+        this.ports = ports;
     }
 
     @Override

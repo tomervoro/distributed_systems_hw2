@@ -10,9 +10,7 @@ import static java.lang.Math.pow;
 
 public class MainGrpcServer{
 
-    public static void main(String cityName) throws Exception {
-        CityRepository cityRep = new CityRepository();
-        int portToListen = cityRep.getCityByName(cityName).getPort();
+    public static void main(String cityName, int portToListen, CityRepository cityRep) throws Exception {
         ServerCommServer server = new ServerCommServer(portToListen, cityRep, cityName);
         server.start();
         System.out.println("Server started");
