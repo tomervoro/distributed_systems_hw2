@@ -1,16 +1,14 @@
-- Change RideOfferController/ client to use protobuf
-- handle return values from askRide/ rideOffer to the REST server and client
-- test the system with a single client per city
-- Zookeeper:
+- handle return values from askRide to the REST server and client - Done
+- test the system with a single server per city - half Done
+
+- Zookeeper - Done:
     - leader election: decide on a single server for city to handle request - mostly done
     - failure detection: handle failures of the leader - mostly done
     - atomic broadcast: keep the leader and followers synced on the state of the system
 
+- notify followers on ride requests
+- add REST and gRPC implementations of system snapshot
+
 - test the system with multiple servers per shard
 - test failure detection and handling
 - optional - run servers with dockers
-
-
-Small fixes:
-- handle no possible rides for ride request
--

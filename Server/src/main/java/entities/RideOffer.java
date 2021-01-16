@@ -22,7 +22,7 @@ public class RideOffer {
     @Getter @Setter private String phoneNumber;
     @Getter @Setter private String startCityName;
     @Getter @Setter private String endCityName;
-    @Getter @Setter @DateTimeFormat(iso=DateTimeFormat.ISO.DATE) private Date departureDate;
+    @Getter @Setter private String departureDate;
     @Getter @Setter private int vacancies;
     @Getter @Setter private int permittedDeviation;
 

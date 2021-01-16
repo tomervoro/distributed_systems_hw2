@@ -2,9 +2,13 @@ package client_grpc;
 
 import generated.*;
 import io.grpc.Channel;
+import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
+import utils.RideOfferAlreadyExistsException;
 
 import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class ServerCommClient {
     private static final Logger logger = Logger.getLogger(ServerCommClient.class.getName());
@@ -17,63 +21,61 @@ public class ServerCommClient {
     }
 
 
-    public void offerRide(RideOffer newRideOffer) {
+    public boolean offerRide(RideOffer newRideOffer){
         try {
             ServerResponse response = blockingStub.offerRide(newRideOffer);
-            System.out.println("Added ride: " + newRideOffer.toString());
-        } catch (StatusRuntimeException e) {
+            if (response.getResult() == ServerResponse.Result.RIDE_ALREADY_EXISTS){
+                throw new RideOfferAlreadyExistsException();
+            }
+            return true;
+        }catch (StatusRuntimeException e){
+            if (e.getStatus() == Status.ALREADY_EXISTS)
+            throw e;
+        } catch (Exception e) {
             e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+
+    public SnapshotInfo getSnapshot(){
+        try {
+            SnapshotInfo response = blockingStub.getSnapshot(Dummy.newBuilder().build());
+            return response;
+        }catch (StatusRuntimeException e){
+            if (e.getStatus() == Status.ALREADY_EXISTS)
+            throw e;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+    }
+
+    public RideOffer askRide(RideRequest request){
+        try {
+            RideOffer response = blockingStub.askRide(request);
+            if (response != null)
+            {
+                System.out.println("requested ride: " + request.toString() + "\ngot response: " + response.toString());
+                return response;
+            }
+            else {
+                System.out.println("No ride found!");
+                return null;
+            }
+        } catch (StatusRuntimeException e) {
+
+            if (e.getStatus() == Status.NOT_FOUND){
+                return null;
+            }else{
+                throw e;
+            }
         }
     }
 
-    public void askRide(RideRequest request){
-        
-    }
 
-//
-//    public void routeChat(){
-//        StreamObserver<RouteNote> requestObserver =
-//                asyncStub.routeChat(new StreamObserver<RouteNote>() {
-//                    @Override
-//                    public void onNext(RouteNote note) {
-//                        System.out.println(note.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable t) {
-//                        System.out.println(t.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onCompleted() {
-//                        System.out.println("Client.java side stream completed");
-//                    }
-//                });
-//
-//        try {
-//            RouteNote[] requests =
-//                    {
-//                            newNote("First message", 0, 0),
-//                            newNote("Second message", 0, 1),
-//                            newNote("Third message", 1, 0),
-//                            newNote("Fourth message", 1, 1)
-//                    };
-//
-//            for (RouteNote request : requests) {
-//                requestObserver.onNext(request);
-//            }
-//        } catch (RuntimeException e) {
-//            // Cancel RPC
-//            requestObserver.onError(e);
-//            e.printStackTrace();
-//        }
-//        // Mark the end of requests
-//        requestObserver.onCompleted();
-//    }
-//
-//    private RouteNote newNote(String message, int lat, int lon) {
-//        return RouteNote.newBuilder().setMessage(message)
-//                .setLocation(Point.newBuilder().setLatitude(lat).setLongitude(lon).build()).build();
-//    }
-//
+    public void commitOrAbortRideRequest(RideRequest req) {
+        blockingStub.commitOrAbortRideRequest(req);
+    }
 }

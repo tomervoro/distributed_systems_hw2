@@ -25,7 +25,7 @@ public class ServerCommServer {
      */
     public ServerCommServer(ServerBuilder<?> serverBuilder, int port, CityRepository cityRepository, String cityName) {
         this.port = port;
-        server = serverBuilder.addService(new ServerCommService(cityRepository, cityName))
+        server = serverBuilder.addService(new ServerCommService(cityRepository))
                 .build();
     }
 

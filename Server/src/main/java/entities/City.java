@@ -13,15 +13,15 @@ public class City {
     @Getter @Setter private long y;
     @Getter @Setter private String name;
     @Getter @Setter private long id;
-    @Getter @Setter private List<Integer> ports;
+    @Getter @Setter private int port;
 
     private static long cityCount = 0;
-    public City(long x, long y, String name, List<Integer> ports) {
+    public City(long x, long y, String name, int port) {
         this.x = x;
         this.y = y;
         this.name = name;
         this.id = cityCount++;
-        this.ports = ports;
+        this.port = port;
     }
 
     @Override

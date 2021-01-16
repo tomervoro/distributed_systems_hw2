@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 import java.util.Date;
+// import repositories.CityRepository;
 
 public class Client {
     public static void offerNewRide(String name,
@@ -25,10 +26,19 @@ public class Client {
             data.put("phoneNumber", phoneNumber);
             data.put("startCityName", startCityName);
             data.put("endCityName", endCityName);
-//             data.put("departureDate", departureDate);
+            data.put("departureDate", departureDate);
             data.put("vacancies", Long.toString(vacancies));
             data.put("permittedDeviation", Long.toString(permittedDeviation));
-            makeCall("http://localhost:8080/rideOffers", data, "POST");
+
+//             CityRepository cityRep = new CityRepository();
+//             Random rand = new Random();
+//             List<Integer> ports = cityRep.getAllCities().values().stream().map(it -> it.getPort()).collect();
+//             int randomPort = ports.get(rand.nextInt(ports.size()));
+//             System.out.println("Sending request to "+Integer.toString(randomPort));
+//             makeCall("http://0.0.0.0:"+Integer.toString(randomPort)+"/rideOffers", data, "POST");
+                makeCall("http://0.0.0.0:21000/rideOffers", data, "POST");
+
+
         } catch (Exception e){}
         
     }

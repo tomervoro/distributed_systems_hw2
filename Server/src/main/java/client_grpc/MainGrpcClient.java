@@ -5,85 +5,88 @@ import io.grpc.ManagedChannelBuilder;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Scanner;
-//import entities.RideOffer;
 import generated.RideOffer;
 import generated.RideRequest;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
+import lombok.extern.slf4j.Slf4j;
+import utils.RideOfferAlreadyExistsException;
+import zkapi.ZooKeeperService;
+import zkapi.utils.ShardInfo;
+import generated.SnapshotInfo;
+
+@Slf4j
 public class MainGrpcClient {
-
-    private static Map<String, List<String>> mapCitiesPorts=new HashMap<>();
-    
-    public static void initMap(){
-        if (!mapCitiesPorts.isEmpty())
-            return;
-
-
-        List<String> TLV_ports = new ArrayList<String>(){{
-            add("8001");
-            add("7001");
-            add("6001");
-        }};
-        mapCitiesPorts.put("TLV", TLV_ports);
-
-
-        List<String> netanya_ports = new ArrayList<String>(){{
-            add("8002");
-            add("7002");
-            add("6002");
-        }};
-        mapCitiesPorts.put("Netanya", netanya_ports);
-
-
-        List<String> haifa_ports = new ArrayList<String>(){{
-            add("8003");
-            add("7003");
-            add("6003");
-        }};
-        mapCitiesPorts.put("Haifa", haifa_ports);
-
-
-        List<String> jerusalem_ports = new ArrayList<String>(){{
-            add("8004");
-            add("7004");
-            add("6004");
-        }};
-        mapCitiesPorts.put("Jerusalem", jerusalem_ports);
-
-
-        List<String> yaffo_ports = new ArrayList<String>(){{
-            add("8005");
-            add("7005");
-            add("6005");
-        }};
-        mapCitiesPorts.put("Yaffo", yaffo_ports);
+    private ZooKeeperService zkApi;
+    private ConcurrentMap<String, ManagedChannel> openChannels;
+    public MainGrpcClient(String cityName){
+//        this.zkApi = new ZooKeeperService("localhost:2181", cityName);
+        zkApi = ShardInfo.getShardInfo().getZkService();
+        openChannels = new ConcurrentHashMap<String, ManagedChannel>();
     }
     
-    public static void offerRide(String cityName, RideOffer newRideOffer) {
-        initMap();
-        Random rand = new Random();
-        String randomPortNum = mapCitiesPorts.get(cityName).get(rand.nextInt(mapCitiesPorts.get(cityName).size()));
-        String target = "localhost:" + randomPortNum;
-        ManagedChannel channel = ManagedChannelBuilder.forTarget(target).usePlaintext().build();
-        ServerCommClient client = new ServerCommClient(channel);
-        client.offerRide(newRideOffer);
-        System.out.println("Waiting");
-        Scanner sc= new Scanner(System.in);
-        sc.next();
+    public boolean offerRide(String cityName, RideOffer newRideOffer) throws RideOfferAlreadyExistsException {
+        return offerRide(cityName, newRideOffer, "");
     }
 
-    public static void askRide(String cityName, RideRequest newRideRequest) {
-        initMap();
+    public boolean offerRide(String cityName, RideOffer newRideOffer, String target) throws RideOfferAlreadyExistsException {
+        if (target.equals("")) {
+            target = getRandomTarget(cityName);
+        }
+        log.info(ShardInfo.getShardInfo().getHostname() + ": sending ride offer to " + target);
+        ManagedChannel channel = getChannelForTarget(target);
+        ServerCommClient distServer = new ServerCommClient(channel);
+        return distServer.offerRide(newRideOffer);
+    }
+
+    public RideOffer askRide(String cityName, RideRequest newRideRequest) {
+        return askRide(cityName, newRideRequest, "");
+    }
+
+    public RideOffer askRide(String cityName, RideRequest newRideRequest, String target) {
+        if (target.equals("")) {
+            target = getRandomTarget(cityName);
+        }
+        ManagedChannel channel = getChannelForTarget(target);
+        ServerCommClient distServer = new ServerCommClient(channel);
+        RideOffer rideOffer = distServer.askRide(newRideRequest);
+        return rideOffer;
+    }
+
+    public SnapshotInfo getSnapshot(String cityName) {
+        String target = getRandomTarget(cityName);
+        ManagedChannel channel = getChannelForTarget(target);
+        ServerCommClient distServer = new ServerCommClient(channel);
+        SnapshotInfo snapshotInfo = distServer.getSnapshot();
+        return snapshotInfo;
+    }
+
+    private String getRandomTarget(String cityName){
         Random rand = new Random();
-        String randomPortNum = mapCitiesPorts.get(cityName).get(rand.nextInt(mapCitiesPorts.get(cityName).size()));
-        String target = "localhost:" + randomPortNum;
-        ManagedChannel channel = ManagedChannelBuilder.forTarget(target).usePlaintext().build();
-        ServerCommClient client = new ServerCommClient(channel);
-        client.askRide(newRideRequest);
-        System.out.println("Waiting");
-        Scanner sc= new Scanner(System.in);
-        sc.next();
+        List<String> liveNodes = zkApi.getLiveNodesForCity(cityName);
+        String randomTarget = liveNodes.get(rand.nextInt(liveNodes.size()));
+        return randomTarget;
+    }
+
+    public void commitOrAbortRideRequest(RideRequest req){
+        String target = ShardInfo.getShardInfo().getZkService().getLeaderForCity(req.getStartCityName());
+        ManagedChannel channel = getChannelForTarget(target);
+        ServerCommClient distServer = new ServerCommClient(channel);
+        distServer.commitOrAbortRideRequest(req);
+    }
+
+    public ManagedChannel getChannelForTarget(String target){
+        ManagedChannel channel;
+        if (openChannels.containsKey(target)){
+            channel = openChannels.get(target);
+        }else{
+            channel = ManagedChannelBuilder.forTarget(target).usePlaintext().build();
+            openChannels.put(target, channel);
+        }
+        return channel;
     }
 }

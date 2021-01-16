@@ -26,7 +26,7 @@ service ServerComm{
   rpc offerRide(RideOffer) returns (ServerResponse);
   rpc askRide(RideRequest) returns (RideOffer);
   rpc commitOrAbortRideRequest(RideRequest) returns (ServerResponse);
-  rpc getSnapshot (Dummy) returns (stream SnapshotInfo );
+  rpc getSnapshot (Dummy) returns ( SnapshotInfo );
 }
 
 message Dummy{
@@ -34,10 +34,8 @@ message Dummy{
 }
 
 message SnapshotInfo{
-  repeated RideOfferInfo rideOfferInfo = 1;
-  repeated RideRequestInfo rideRequestInfo = 2;
-
-
+  repeated RideOfferInfo rideOffers = 1 ;
+  repeated SegmentInfo rideSegments  = 2;
 }
 
 message RideOfferInfo{
@@ -45,10 +43,12 @@ message RideOfferInfo{
   int32 taken_spots = 2;
 }
 
-message RideRequestInfo{
-  int32 satisfied = 1;
-  repeated RideRequest requests = 2 ;
+message SegmentInfo{
+  bool is_satisfied = 1;
+  RideRequest request= 2;
+  RideOffer offer = 3;
 }
+
 
 
 message RideOffer{
@@ -56,7 +56,7 @@ message RideOffer{
   string phoneNumber = 2;
   string startCityName = 3;
   string endCityName = 4;
-  google.protobuf.Timestamp departureDate = 5;
+  string departureDate = 5;
   int32 vacancies = 6;
   int32 permittedDeviation =7;
 }
@@ -67,6 +67,7 @@ message ServerResponse{
   enum Result{
   SUCCESS = 0;
   FAILURE = 1;
+  RIDE_ALREADY_EXISTS = 2;
   }
   Result result = 1;
 }
@@ -74,74 +75,29 @@ message ServerResponse{
 message RideRequest{
   string startCityName = 1;
   string endCityName = 2;
-  google.protobuf.Timestamp date = 3;
+  string date = 3;
   bool commit = 4;
   bool recursive = 5;
+  bool cancel = 6;
+  google.protobuf.Timestamp requestTimestamp = 7;
 }
 
-//
-//service RouteGuide {
-//// Interface exported by the server.
-//  // A server-to-client streaming RPC.
-//  //
-//  // Obtains the Features available within the given Rectangle.  Results are
-//  // streamed rather than returned at once (e.g. in a response message with a
-//  // repeated field), as the rectangle may cover a large area and contain a
-//  // huge number of features.
-//  rpc ListFeatures(Rectangle) returns (stream Feature) {}
-//
-//  // A Bidirectional streaming RPC.
-//  //
-//  // Accepts a stream of RouteNotes sent while a route is being traversed,
-//  // while receiving other RouteNotes (e.g. from other users).
-//  rpc RouteChat(stream RouteNote) returns (stream RouteNote) {}
-//}
-//
-//message Point {
-//  int32 latitude = 1;
-//  int32 longitude = 2;
-//}
-//
-//// A latitude-longitude rectangle, represented as two diagonally opposite
-//// points "lo" and "hi".
-//message Rectangle {
-//  // One corner of the rectangle.
-//  Point lo = 1;
-//
-//  // The other corner of the rectangle.
-//  Point hi = 2;
-//}
-//
-//message Feature {
-//  // The name of the feature.
-//  string name = 1;
-//
-//  // The point where the feature is detected.
-//  Point location = 2;
-//}
-//
-//message RouteNote {
-//  // The location from which the message is sent.
-//  Point location = 1;
-//
-//  // The message to be sent.
-//  string message = 2;
-//}
-//
-//// A RouteSummary is received in response to a RecordRoute rpc.
-//// It contains the number of individual points received, the number of
-//// detected features, and the total distance covered as the cumulative sum of
-//// the distance between each point.
-//message RouteSummary {
-//  // The number of points received.
-//  int32 point_count = 1;
-//
-//  // The number of known features passed while traversing the route.
-//  int32 feature_count = 2;
-//
-//  // The distance covered in metres.
-//  int32 distance = 3;
-//
-//  // The duration of the traversal in seconds.
-//  int32 elapsed_time = 4;
-//}
+
+message Path{
+  message Segment{
+    string startCityName =1;
+    string endCityName =2;
+    string driverName = 3;
+  }
+  repeated Segment segments = 1;
+}
+
+message SystemSnapshot{
+  repeated RideOfferInfo rideOffers = 1;
+  message PlannedPath{
+    bool is_satisfied = 1;
+    Path requestPath = 2;
+    Path givenPath = 3;
+  }
+  repeated PlannedPath planned_paths = 2;
+}

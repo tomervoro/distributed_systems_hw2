@@ -36,7 +36,7 @@ public class RideOfferRepository {
 
     public void save(RideOffer newRideOffer) throws RideOfferAlreadyExistsException {
         if (rideOffers.contains(newRideOffer)) {
-            throw new RideOfferAlreadyExistsException(newRideOffer.getPersonName());
+            throw new RideOfferAlreadyExistsException();
         }
         saveRideOffer(newRideOffer);
     }

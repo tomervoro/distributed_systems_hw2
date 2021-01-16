@@ -1,0 +1,27 @@
+When receiving new published ride from client through REST:
+    - if the same departure city - brodcast to all followers and return answer
+    - if for another city, send via gRPC to one of the servers of the correct shard
+
+When receiving new published ride from client through gRPC:
+    - if leader - bcast to all followers and return answer
+    - if not - forward to leader, receive answer and forward that
+
+when receiving request for path mapping through REST:
+    - go over each segment in the path and try to find a suitable ride - contact each shard with a starting destination
+    - if found for all segments - send commit to everyone
+    - if not, send abort
+    - reply to the client accordingly
+
+when receiving request for segment through gRPC:
+    - if leader, check for available space in city - if found, notify the msg sender, if not:
+        - if recursive is on, check all other cities with turned off recursive
+        - if not, return not found
+    - if follower, send msg to leader and wait for response and send back answer
+
+when a server from the same shard has died:
+    - remove from group membership
+    - check if is the new leader - if so open the REST server
+
+when receiving a snapshot request:
+    -return 
+

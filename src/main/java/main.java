@@ -20,10 +20,9 @@ public class main {
         System.out.println("Sending...");
         Client.offerNewRide("Tomer Vor",
                             "05498343",
-                            "TLV",
                             "Netanya",
-//                            JsonFormat.printer().print(timestamp),
-                                "",
+                            "TLV",
+                            "14/1/20",
                             1,
                             1);
         System.out.println("Sent");

@@ -40,6 +40,7 @@ dependencies {
     runtimeOnly "io.grpc:grpc-netty-shaded:${grpcVersion}"
 
     compile group: 'org.json', name: 'json', version: '20090211'
+    implementation 'org.jetbrains:annotations:15.0'
 
 
 }
