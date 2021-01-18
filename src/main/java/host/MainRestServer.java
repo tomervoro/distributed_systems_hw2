@@ -13,7 +13,6 @@ public class MainRestServer {
     public static void main(String cityName) {
         RideOfferRepository.setDefaultName(cityName);
         SpringApplication app = new SpringApplication(MainRestServer.class);
-//        app.setDefaultProperties(Collections.singletonMap("0.0.0.0", port));
         app.run();
     }
 

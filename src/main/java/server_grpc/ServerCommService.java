@@ -4,7 +4,9 @@ import generated.*;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
-import javafx.util.Pair;
+//import javafx.util.Pair;
+//import org.apache.commons.lang3.tuple.Pair;
+import org.javatuples.Pair;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -56,8 +58,8 @@ public class ServerCommService extends ServerCommGrpc.ServerCommImplBase {
         Timestamp curr_timestamp = new Timestamp(System.currentTimeMillis());
         for (Map.Entry<RideRequest, Pair<RideOffer, Timestamp>> entry : rideRequests.entrySet()) {
             RideRequest request = entry.getKey();
-            RideOffer offer = entry.getValue().getKey();
-            Timestamp timestamp = entry.getValue().getValue();
+            RideOffer offer = entry.getValue().getValue0();
+            Timestamp timestamp = entry.getValue().getValue1();
             if (timestamp == null){
                 continue;
             }
@@ -250,18 +252,18 @@ public class ServerCommService extends ServerCommGrpc.ServerCommImplBase {
 
         if (commit && !cancel) {
             // remove timestamp to signal commit
-            Pair<RideOffer, Timestamp> new_match = new Pair(match.getKey(), null);
+            Pair<RideOffer, Timestamp> new_match = new Pair(match.getValue0(), null);
             rideRequests.replace(matchingRideRequest, new_match);
 
             SegmentInfo commitedRequst = SegmentInfo.newBuilder()
                                         .setRequest(matchingRideRequest)
-                                        .setOffer(match.getKey()).build();
+                                        .setOffer(match.getValue0()).build();
             ShardInfo.getShardInfo().getZkService().broadcastRideRequest(commitedRequst);
         }
 
         if (cancel) {
             // else- abort
-            RideOffer rideOffer = match.getKey();
+            RideOffer rideOffer = match.getValue0();
             rideRequests.entrySet().stream()
                     .filter(x -> compareRideRequests(x.getKey(), req))
                     .collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
@@ -296,7 +298,7 @@ public class ServerCommService extends ServerCommGrpc.ServerCommImplBase {
 
     private int getTakenSpotsInOffer(RideOffer rideOffer){
         return (int) rideRequests.values().stream()
-            .filter(x -> compareRideOffers(x.getKey(), rideOffer) && x.getValue() == null)
+            .filter(x -> compareRideOffers(x.getValue0(), rideOffer) && x.getValue1() == null)
             .count();
     }
 
@@ -326,9 +328,9 @@ public class ServerCommService extends ServerCommGrpc.ServerCommImplBase {
         // get all requested segments for this city
         List<SegmentInfo> segmentInfos = rideRequests.keySet().stream().map(
                 it -> SegmentInfo.newBuilder()
-                        .setIsSatisfied(rideRequests.get(it).getValue()==null)
+                        .setIsSatisfied(rideRequests.get(it).getValue1()==null)
                         .setRequest(it)
-                        .setOffer(rideRequests.get(it).getKey()).build()
+                        .setOffer(rideRequests.get(it).getValue0()).build()
         ).collect(Collectors.toList());
         builder.addAllRideSegments(segmentInfos);
 

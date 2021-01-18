@@ -1,12 +1,12 @@
 - handle return values from askRide to the REST server and client - Done
-- test the system with a single server per city - half Done
+- test the system with a single server per city - Done
 
 - Zookeeper - Done:
     - leader election: decide on a single server for city to handle request - mostly done
     - failure detection: handle failures of the leader - mostly done
     - atomic broadcast: keep the leader and followers synced on the state of the system
 
-- notify followers on ride requests
+- notify followers on ride requests - Done
 - add REST and gRPC implementations of system snapshot - Done
 
 
