@@ -1,6 +1,7 @@
 package zkapi;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+import generated.SegmentInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.I0Itec.zkclient.exception.ZkMarshallingError;
 import org.I0Itec.zkclient.serialize.ZkSerializer;
@@ -15,50 +16,78 @@ import org.I0Itec.zkclient.ZkClient;
 
 import generated.RideOffer;
 
+import java.io.*;
 import java.util.List;
 
 @Slf4j
 public class ZooKeeperService {
     private ZkClient zkClient;
     private String cityName;
-    public ZooKeeperService(String host, String cityName){
+
+    public ZooKeeperService(String host, String cityName) {
+
         // initialize the zookeeper client
         zkClient = new ZkClient(host, 3000, 3000, new ZkSerializer() {
+            //            @Override
+//            public byte[] serialize(Object o) throws ZkMarshallingError {
+//                if (o instanceof String)
+//                    return ((String) o).getBytes();
+//                else if (o instanceof RideOffer){
+//                    return ((RideOffer) o).toByteArray();
+//                }else{
+//                    return null;
+//                }
+//            }
+//
+//            @Override
+//            public Object deserialize(byte[] bytes) throws ZkMarshallingError {
+//                if (bytes == null) {
+//                    return null;
+//                } else {
+//                    try{
+//                        return RideOffer.parseFrom(bytes);
+//                    } catch (InvalidProtocolBufferException e) {
+//                        // not a protobuf
+//                    }
+//                    return StringUtils.newStringUtf8(bytes);
+//                }
             @Override
-            public byte[] serialize(Object o) throws ZkMarshallingError {
-                if (o instanceof String)
-                    return ((String) o).getBytes();
-                else if (o instanceof RideOffer){
-                    return ((RideOffer) o).toByteArray();
-                }else{
-                    return null;
+            public byte[] serialize(Object obj) throws ZkMarshallingError {
+                try {
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    ObjectOutputStream os = new ObjectOutputStream(out);
+                    os.writeObject(obj);
+                    return out.toByteArray();
+
+                } catch (IOException e) {
+                    throw new ZkMarshallingError();
                 }
             }
 
             @Override
-            public Object deserialize(byte[] bytes) throws ZkMarshallingError {
-                if (bytes == null) {
-                    return null;
-                } else {
-                    try{
-                        return RideOffer.parseFrom(bytes);
-                    } catch (InvalidProtocolBufferException e) {
-                        // not a protobuf
-                    }
-                    return StringUtils.newStringUtf8(bytes);
+            public Object deserialize(byte[] data) throws ZkMarshallingError {
+                try {
+                    ByteArrayInputStream in = new ByteArrayInputStream(data);
+                    ObjectInputStream is = new ObjectInputStream(in);
+                    return is.readObject();
+                } catch (Exception e) {
+                    throw new ZkMarshallingError();
                 }
             }
         });
         this.cityName = cityName;
         // make sure all the parent folders exist
         if (!zkClient.exists(ShardInfo.MEMBERSHIP)) {
-            zkClient.createPersistent(ShardInfo.MEMBERSHIP , "all live nodes are displayed here");
+            zkClient.createPersistent(ShardInfo.MEMBERSHIP, "all live nodes are displayed here");
         }
         if (!zkClient.exists(ShardInfo.ELECTION)) {
-            zkClient.createPersistent(ShardInfo.ELECTION , "node for group membership");
+            zkClient.createPersistent(ShardInfo.ELECTION, "node for group membership");
         }
         if (!zkClient.exists(ShardInfo.RIDE_OFFERS)) {
-            zkClient.createPersistent(ShardInfo.RIDE_OFFERS , "node for sharing ride offers");
+            zkClient.createPersistent(ShardInfo.RIDE_OFFERS, "node for sharing ride offers");
+        }
+        if (!zkClient.exists(ShardInfo.RIDE_REQUESTS)) {
+            zkClient.createPersistent(ShardInfo.RIDE_REQUESTS, "node for sharing ride requests");
         }
     }
 
@@ -66,8 +95,8 @@ public class ZooKeeperService {
         return zkClient.readData(path);
     }
 
-    public void joinLeaderElection(String name){
-        if (!zkClient.exists(ShardInfo.ELECTION.concat("/").concat(cityName)) ){
+    public void joinLeaderElection(String name) {
+        if (!zkClient.exists(ShardInfo.ELECTION.concat("/").concat(cityName))) {
             // election not started yet
             zkClient.createPersistent(ShardInfo.ELECTION.concat("/").concat(cityName), "node for leader election");
         }
@@ -75,13 +104,13 @@ public class ZooKeeperService {
         zkClient.subscribeChildChanges(ShardInfo.ELECTION.concat("/").concat(cityName), new LeaderChangeListener());
     }
 
-    public void joinShardMembership(String name, String data){
-        if (!zkClient.exists(ShardInfo.MEMBERSHIP.concat("/").concat(cityName)) ){
+    public void joinShardMembership(String name, String data) {
+        if (!zkClient.exists(ShardInfo.MEMBERSHIP.concat("/").concat(cityName))) {
             // membership not initialized yet
             zkClient.createPersistent(ShardInfo.MEMBERSHIP.concat("/").concat(cityName), "node for group membership");
         }
         String path = ShardInfo.MEMBERSHIP.concat("/").concat(cityName).concat("/").concat(name);
-        if (zkClient.exists(path)){
+        if (zkClient.exists(path)) {
             // name already in shard, do nothing
             return;
         }
@@ -89,22 +118,22 @@ public class ZooKeeperService {
         zkClient.subscribeChildChanges(ShardInfo.MEMBERSHIP.concat("/").concat(cityName), new MembershipChangeListener());
     }
 
-    public List<String> getLiveNodesForCity(String cityName){
-        if (!zkClient.exists(ShardInfo.MEMBERSHIP.concat("/").concat(cityName)) ){
+    public List<String> getLiveNodesForCity(String cityName) {
+        if (!zkClient.exists(ShardInfo.MEMBERSHIP.concat("/").concat(cityName))) {
             throw new RuntimeException("city " + cityName + " does not exists");
         }
         List<String> liveNodes = zkClient.getChildren(ShardInfo.MEMBERSHIP.concat("/").concat(cityName));
-        if (liveNodes.isEmpty()){
+        if (liveNodes.isEmpty()) {
             throw new RuntimeException("No live nodes for this city");
         }
-        
+
         return liveNodes;
     }
 
-    public String getLeaderForCity(String cityName){
+    public String getLeaderForCity(String cityName) {
 //        log.info("city name: " + cityName);
-        if (!zkClient.exists(ShardInfo.ELECTION.concat("/").concat(cityName))){
-            throw new RuntimeException("election for city " + cityName + "does now exists");
+        if (!zkClient.exists(ShardInfo.ELECTION.concat("/").concat(cityName))) {
+            throw new RuntimeException("election for city " + cityName + "does not exists");
         }
         // because we use sequential nodes we cant save the name as part of the node name, instead we save it as the node data
         List<String> aliveNodes = zkClient.getChildren(ShardInfo.ELECTION.concat("/").concat(cityName));
@@ -114,27 +143,48 @@ public class ZooKeeperService {
     }
 
 
-    public void broadcastRideOffer(RideOffer rideOffer){
-        if (!zkClient.exists(ShardInfo.RIDE_OFFERS.concat("/").concat(cityName))){
+    public void broadcastRideOffer(RideOffer rideOffer) {
+        if (!zkClient.exists(ShardInfo.RIDE_OFFERS.concat("/").concat(cityName))) {
             // ride offers not initialized yet
-            zkClient.createPersistent(ShardInfo.RIDE_OFFERS.concat("/").concat(cityName), "node for group membership");;
+            zkClient.createPersistent(ShardInfo.RIDE_OFFERS.concat("/").concat(cityName), "node for group membership");
+            ;
         }
         // TODO: maybe change back rides to be persistent
 //        zkClient.createPersistentSequential(ShardInfo.RIDE_OFFERS.concat("/").concat(cityName).concat("/").concat("offer"),rideOffer);
-        zkClient.createEphemeralSequential(ShardInfo.RIDE_OFFERS.concat("/").concat(cityName).concat("/").concat("offer"),rideOffer);
+        zkClient.createEphemeralSequential(ShardInfo.RIDE_OFFERS.concat("/").concat(cityName).concat("/").concat("offer"), rideOffer);
         log.info(ShardInfo.getShardInfo() + " bcasted offer from " + rideOffer.getPersonName() + " to followers");
     }
 
 
-    public void startWatchingRideOffers(){
-        if (!zkClient.exists(ShardInfo.RIDE_OFFERS.concat("/").concat(cityName))){
+    public void startWatchingRideOffers() {
+        if (!zkClient.exists(ShardInfo.RIDE_OFFERS.concat("/").concat(cityName))) {
             // ride offers not initialized yet
-            zkClient.createPersistent(ShardInfo.RIDE_OFFERS.concat("/").concat(cityName), "node for group membership");;
+            zkClient.createPersistent(ShardInfo.RIDE_OFFERS.concat("/").concat(cityName), "node for sharing ride offers");
+            ;
         }
         zkClient.subscribeChildChanges(ShardInfo.RIDE_OFFERS.concat("/").concat(cityName), new ServerCommService.RideOfferListener());
     }
 
-    public boolean isLeader(){
+
+    public void broadcastRideRequest(SegmentInfo segmentInfo) {
+        if (!zkClient.exists(ShardInfo.RIDE_REQUESTS.concat("/").concat(cityName))) {
+            // ride requests not initialized yet
+            zkClient.createPersistent(ShardInfo.RIDE_REQUESTS.concat("/").concat(cityName), "node for sharing ride requests");
+            ;
+        }
+        zkClient.createEphemeralSequential(ShardInfo.RIDE_REQUESTS.concat("/").concat(cityName).concat("/").concat("request"), segmentInfo);
+        log.info("bcasted committed ride request to followers");
+    }
+
+    public void startWatchingRideRequests() {
+        if (!zkClient.exists(ShardInfo.RIDE_REQUESTS.concat("/").concat(cityName))) {
+            // ride offers not initialized yet
+            zkClient.createPersistent(ShardInfo.RIDE_REQUESTS.concat("/").concat(cityName), "node for sharing ride requests");
+            ;
+        }
+        zkClient.subscribeChildChanges(ShardInfo.RIDE_REQUESTS.concat("/").concat(cityName), new ServerCommService.RideRequestListener());
+    }
+    public boolean isLeader() {
         return getLeaderForCity(cityName).equals(ShardInfo.getShardInfo().getHostname());
     }
 

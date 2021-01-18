@@ -96,8 +96,10 @@ message SystemSnapshot{
   repeated RideOfferInfo rideOffers = 1;
   message PlannedPath{
     bool is_satisfied = 1;
-    Path requestPath = 2;
-    Path givenPath = 3;
+    string date = 2;
+    Path requestPath = 3;
+    Path givenPath = 4;
   }
   repeated PlannedPath planned_paths = 2;
 }
+

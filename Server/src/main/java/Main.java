@@ -64,6 +64,7 @@ public class Main {
         zkService.joinShardMembership(hostName, hostName);
         zkService.joinLeaderElection(hostName);
         zkService.startWatchingRideOffers();
+        zkService.startWatchingRideRequests();
 
         // init shard info
         ShardInfo.getShardInfo().setZkService(zkService);

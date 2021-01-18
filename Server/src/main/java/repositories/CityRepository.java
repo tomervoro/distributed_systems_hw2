@@ -22,7 +22,7 @@ public class CityRepository {
         City telAviv = new City(0, 0, "TLV", 21000);
 
         City netanya = new City(1, 0, "Netanya", 21001);
-
+//
         City haifa = new City(1, 1, "Haifa", 21002);
 //
 //        City jerusalem = new City(0, 2, "Jerusalem", 21003);

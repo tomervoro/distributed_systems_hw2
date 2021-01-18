@@ -39,8 +39,8 @@ public class RideOfferController {
     }
 
 
-    @GetMapping("/snapshot")
-    public SystemSnapshot getSnapshot() {
+    @GetMapping(value="/snapshot", produces = MediaType.APPLICATION_JSON_VALUE)
+     SystemSnapshot getSnapshot() {
         List<SnapshotInfo> citySnapshots = new ArrayList<>();
         // get snapshots of all cities
         for (String cityName : cityRepository.getAllCities().keySet()) {
@@ -64,19 +64,27 @@ public class RideOfferController {
         ).flatMap(List::stream).collect(Collectors.toList());
         for (SegmentInfo segment : segmentInfos){
             if (!path_builders.containsKey(segment.getRequest().getRequestTimestamp())){
+                Path initReqPath = Path.newBuilder().addAllSegments(new ArrayList<Path.Segment>()).build();
+                Path initOfferPath = Path.newBuilder().addAllSegments(new ArrayList<Path.Segment>()).build();
+
+                SystemSnapshot.PlannedPath.Builder tmp_builder = SystemSnapshot.PlannedPath.newBuilder()
+                                                                .setGivenPath(initOfferPath)
+                                                                .setRequestPath(initReqPath)
+                                                                .setDate(segment.getRequest().getDate())
+                                                                .setIsSatisfied(true);
                 path_builders.put(segment.getRequest().getRequestTimestamp(),
-                        SystemSnapshot.PlannedPath.newBuilder());
+                        tmp_builder);
             }
             SystemSnapshot.PlannedPath.Builder tmpBuilder = path_builders.get(segment.getRequest().getRequestTimestamp());
             tmpBuilder.setIsSatisfied(tmpBuilder.getIsSatisfied() && segment.getIsSatisfied());
 
-            RideRequest currRequst = segment.getRequest();
+            RideRequest currRequest = segment.getRequest();
             RideOffer currOffer = segment.getOffer();
-            List<Path.Segment> newRequestPath = tmpBuilder.getRequestPath().getSegmentsList();
+            List<Path.Segment> newRequestPath = new ArrayList<>(tmpBuilder.getRequestPath().getSegmentsList());
             newRequestPath.add(
-                    Path.Segment.newBuilder().setStartCityName(currRequst.getStartCityName()).setEndCityName(currRequst.getEndCityName()).build()
+                    Path.Segment.newBuilder().setStartCityName(currRequest.getStartCityName()).setEndCityName(currRequest.getEndCityName()).build()
             );
-            List<Path.Segment> newOffersPath = tmpBuilder.getGivenPath().getSegmentsList();
+            List<Path.Segment> newOffersPath = new ArrayList<>(tmpBuilder.getGivenPath().getSegmentsList());
             newOffersPath.add(
                     Path.Segment.newBuilder().setDriverName(currOffer.getPersonName()).setStartCityName(currOffer.getStartCityName()).setEndCityName(currOffer.getEndCityName()).build()
             );
@@ -86,7 +94,8 @@ public class RideOfferController {
         }
         List<SystemSnapshot.PlannedPath> paths = path_builders.values().stream().map(SystemSnapshot.PlannedPath.Builder::build).collect(Collectors.toList());
         builder.addAllPlannedPaths(paths);
-        return builder.build();
+        SystemSnapshot result = builder.build();
+        return result;
     }
 
     @PostMapping("/rideOffers")

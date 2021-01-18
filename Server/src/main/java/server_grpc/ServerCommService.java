@@ -253,7 +253,10 @@ public class ServerCommService extends ServerCommGrpc.ServerCommImplBase {
             Pair<RideOffer, Timestamp> new_match = new Pair(match.getKey(), null);
             rideRequests.replace(matchingRideRequest, new_match);
 
-            //TODO: add broadcast of commit to followers
+            SegmentInfo commitedRequst = SegmentInfo.newBuilder()
+                                        .setRequest(matchingRideRequest)
+                                        .setOffer(match.getKey()).build();
+            ShardInfo.getShardInfo().getZkService().broadcastRideRequest(commitedRequst);
         }
 
         if (cancel) {
@@ -270,30 +273,7 @@ public class ServerCommService extends ServerCommGrpc.ServerCommImplBase {
         }
     }
 
-    /**
-     * this class if for listening to changes in ride offers - meant for the leader to atmoic broadcast to all followers the addition of the ride to the system
-     */
-    public static class RideOfferListener implements IZkChildListener {
 
-        @Override
-        public void handleChildChange(String parentPath, List<String> currentChilds) throws Exception {
-            List<RideOffer> previousRides = getAllRideOffers();
-            List<RideOffer> currRides = currentChilds.stream().map(it -> (RideOffer) ShardInfo.getShardInfo().getZkService().getZnodeData(parentPath + "/" + it)).collect(Collectors.toList());
-            List<RideOffer> newRides = currRides.stream().filter(it -> !previousRides.contains(it)).collect(Collectors.toList());
-            for (RideOffer rideOffer : newRides) {
-                String departureDate = rideOffer.getDepartureDate();
-                if (!rides.containsKey(departureDate)) {
-                    rides.put(departureDate, new ArrayList<RideOffer>());
-                }
-                rides.get(departureDate).add(rideOffer);
-                // add vacancies
-                ConcurrentMap<RideOffer, Integer> currVacanciesOnDate = ridesVacancies.getOrDefault(departureDate, new ConcurrentHashMap<>());
-                currVacanciesOnDate.put(rideOffer, rideOffer.getVacancies());
-                ridesVacancies.put(departureDate, currVacanciesOnDate);
-                log.info(ShardInfo.getShardInfo().getHostname() + " added ride bcasted from leader \n" + rideOffer.toString());
-            }
-        }
-    }
 
     public static List<RideOffer> getAllRideOffers() {
         return rides.values().stream().flatMap(List::stream).collect(Collectors.toList());
@@ -355,5 +335,53 @@ public class ServerCommService extends ServerCommGrpc.ServerCommImplBase {
         SnapshotInfo snapshotInfo = builder.build();
         return snapshotInfo;
     }
+
+    /**
+     * this class if for listening to changes in ride offers - meant for the leader to atmoic broadcast to all followers the addition of the ride to the system
+     */
+    public static class RideOfferListener implements IZkChildListener {
+
+        @Override
+        public void handleChildChange(String parentPath, List<String> currentChilds) throws Exception {
+            List<RideOffer> previousRides = getAllRideOffers();
+            List<RideOffer> currRides = currentChilds.stream().map(it -> (RideOffer) ShardInfo.getShardInfo().getZkService().getZnodeData(parentPath + "/" + it)).collect(Collectors.toList());
+            List<RideOffer> newRides = currRides.stream().filter(it -> !previousRides.contains(it)).collect(Collectors.toList());
+            for (RideOffer rideOffer : newRides) {
+                String departureDate = rideOffer.getDepartureDate();
+                if (!rides.containsKey(departureDate)) {
+                    rides.put(departureDate, new ArrayList<RideOffer>());
+                }
+                rides.get(departureDate).add(rideOffer);
+                // add vacancies
+                ConcurrentMap<RideOffer, Integer> currVacanciesOnDate = ridesVacancies.getOrDefault(departureDate, new ConcurrentHashMap<>());
+                currVacanciesOnDate.put(rideOffer, rideOffer.getVacancies());
+                ridesVacancies.put(departureDate, currVacanciesOnDate);
+                log.info(ShardInfo.getShardInfo().getHostname() + " added ride bcasted from leader \n" + rideOffer.toString());
+            }
+        }
+    }
+    public static class RideRequestListener implements IZkChildListener {
+
+        @Override
+        public void handleChildChange(String parentPath, List<String> currentChilds) throws Exception {
+            List<RideOffer> previousRides = getAllRideOffers();
+            List<SegmentInfo> currRequests = currentChilds.stream().map(it -> (SegmentInfo) ShardInfo.getShardInfo().getZkService().getZnodeData(parentPath + "/" + it)).collect(Collectors.toList());
+
+            List<SegmentInfo> newRequests = currRequests.stream().filter(it -> !rideRequests.containsKey(it)).collect(Collectors.toList());
+            for (SegmentInfo commitedSegment : newRequests) {
+                RideRequest commitedRequest = commitedSegment.getRequest();
+                RideOffer commitedOffer = commitedSegment.getOffer();
+                // save the new request
+                Pair<RideOffer, Timestamp> newMatch = new Pair<>(commitedOffer, null);
+                rideRequests.put(commitedRequest, newMatch);
+                // update ride vacancies
+                String departureDate = commitedOffer.getDepartureDate();
+                updateVacancies(departureDate, commitedOffer, -1);
+                log.info(" added commited request bcasted from leader \n" + commitedSegment.toString());
+            }
+        }
+    }
+
+
 
 }

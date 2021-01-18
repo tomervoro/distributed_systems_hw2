@@ -13,6 +13,7 @@ public class ShardInfo {
     public static final String ELECTION = "/election";
     public static final String MEMBERSHIP = "/membership";
     public static final String RIDE_OFFERS = "/ride_offers";
+    public static final String RIDE_REQUESTS = "/ride_requests";
     private static final ShardInfo shardInfo = new ShardInfo();
 
     private ZooKeeperService zkService;

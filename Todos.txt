@@ -7,8 +7,11 @@
     - atomic broadcast: keep the leader and followers synced on the state of the system
 
 - notify followers on ride requests
-- add REST and gRPC implementations of system snapshot
+- add REST and gRPC implementations of system snapshot - Done
+
 
 - test the system with multiple servers per shard
 - test failure detection and handling
 - optional - run servers with dockers
+
+- add ack on commit and abort if not received ack from everyone
