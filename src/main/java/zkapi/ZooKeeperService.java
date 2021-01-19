@@ -17,6 +17,7 @@ import org.I0Itec.zkclient.ZkClient;
 import generated.RideOffer;
 
 import java.io.*;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -137,6 +138,7 @@ public class ZooKeeperService {
         }
         // because we use sequential nodes we cant save the name as part of the node name, instead we save it as the node data
         List<String> aliveNodes = zkClient.getChildren(ShardInfo.ELECTION.concat("/").concat(cityName));
+        Collections.sort(aliveNodes);
         String leader = aliveNodes.get(0);
 //        log.info("Leader node is: " + leader);
         return (String) ShardInfo.getShardInfo().getZkService().getZnodeData(ShardInfo.ELECTION.concat("/").concat(cityName).concat("/").concat(leader));
