@@ -16,8 +16,8 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private SnapshotInfo() {
-    rideOfferInfo_ = java.util.Collections.emptyList();
-    rideRequestInfo_ = java.util.Collections.emptyList();
+    rideOffers_ = java.util.Collections.emptyList();
+    rideSegments_ = java.util.Collections.emptyList();
   }
 
   @java.lang.Override
@@ -53,20 +53,20 @@ private static final long serialVersionUID = 0L;
             break;
           case 10: {
             if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-              rideOfferInfo_ = new java.util.ArrayList<generated.RideOfferInfo>();
+              rideOffers_ = new java.util.ArrayList<generated.RideOfferInfo>();
               mutable_bitField0_ |= 0x00000001;
             }
-            rideOfferInfo_.add(
+            rideOffers_.add(
                 input.readMessage(generated.RideOfferInfo.parser(), extensionRegistry));
             break;
           }
           case 18: {
             if (!((mutable_bitField0_ & 0x00000002) != 0)) {
-              rideRequestInfo_ = new java.util.ArrayList<generated.RideRequestInfo>();
+              rideSegments_ = new java.util.ArrayList<generated.SegmentInfo>();
               mutable_bitField0_ |= 0x00000002;
             }
-            rideRequestInfo_.add(
-                input.readMessage(generated.RideRequestInfo.parser(), extensionRegistry));
+            rideSegments_.add(
+                input.readMessage(generated.SegmentInfo.parser(), extensionRegistry));
             break;
           }
           default: {
@@ -85,10 +85,10 @@ private static final long serialVersionUID = 0L;
           e).setUnfinishedMessage(this);
     } finally {
       if (((mutable_bitField0_ & 0x00000001) != 0)) {
-        rideOfferInfo_ = java.util.Collections.unmodifiableList(rideOfferInfo_);
+        rideOffers_ = java.util.Collections.unmodifiableList(rideOffers_);
       }
       if (((mutable_bitField0_ & 0x00000002) != 0)) {
-        rideRequestInfo_ = java.util.Collections.unmodifiableList(rideRequestInfo_);
+        rideSegments_ = java.util.Collections.unmodifiableList(rideSegments_);
       }
       this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
@@ -107,84 +107,84 @@ private static final long serialVersionUID = 0L;
             generated.SnapshotInfo.class, generated.SnapshotInfo.Builder.class);
   }
 
-  public static final int RIDEOFFERINFO_FIELD_NUMBER = 1;
-  private java.util.List<generated.RideOfferInfo> rideOfferInfo_;
+  public static final int RIDEOFFERS_FIELD_NUMBER = 1;
+  private java.util.List<generated.RideOfferInfo> rideOffers_;
   /**
-   * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+   * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
    */
   @java.lang.Override
-  public java.util.List<generated.RideOfferInfo> getRideOfferInfoList() {
-    return rideOfferInfo_;
+  public java.util.List<generated.RideOfferInfo> getRideOffersList() {
+    return rideOffers_;
   }
   /**
-   * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+   * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
    */
   @java.lang.Override
   public java.util.List<? extends generated.RideOfferInfoOrBuilder> 
-      getRideOfferInfoOrBuilderList() {
-    return rideOfferInfo_;
+      getRideOffersOrBuilderList() {
+    return rideOffers_;
   }
   /**
-   * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+   * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
    */
   @java.lang.Override
-  public int getRideOfferInfoCount() {
-    return rideOfferInfo_.size();
+  public int getRideOffersCount() {
+    return rideOffers_.size();
   }
   /**
-   * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+   * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
    */
   @java.lang.Override
-  public generated.RideOfferInfo getRideOfferInfo(int index) {
-    return rideOfferInfo_.get(index);
+  public generated.RideOfferInfo getRideOffers(int index) {
+    return rideOffers_.get(index);
   }
   /**
-   * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+   * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
    */
   @java.lang.Override
-  public generated.RideOfferInfoOrBuilder getRideOfferInfoOrBuilder(
+  public generated.RideOfferInfoOrBuilder getRideOffersOrBuilder(
       int index) {
-    return rideOfferInfo_.get(index);
+    return rideOffers_.get(index);
   }
 
-  public static final int RIDEREQUESTINFO_FIELD_NUMBER = 2;
-  private java.util.List<generated.RideRequestInfo> rideRequestInfo_;
+  public static final int RIDESEGMENTS_FIELD_NUMBER = 2;
+  private java.util.List<generated.SegmentInfo> rideSegments_;
   /**
-   * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+   * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
    */
   @java.lang.Override
-  public java.util.List<generated.RideRequestInfo> getRideRequestInfoList() {
-    return rideRequestInfo_;
+  public java.util.List<generated.SegmentInfo> getRideSegmentsList() {
+    return rideSegments_;
   }
   /**
-   * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+   * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
    */
   @java.lang.Override
-  public java.util.List<? extends generated.RideRequestInfoOrBuilder> 
-      getRideRequestInfoOrBuilderList() {
-    return rideRequestInfo_;
+  public java.util.List<? extends generated.SegmentInfoOrBuilder> 
+      getRideSegmentsOrBuilderList() {
+    return rideSegments_;
   }
   /**
-   * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+   * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
    */
   @java.lang.Override
-  public int getRideRequestInfoCount() {
-    return rideRequestInfo_.size();
+  public int getRideSegmentsCount() {
+    return rideSegments_.size();
   }
   /**
-   * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+   * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
    */
   @java.lang.Override
-  public generated.RideRequestInfo getRideRequestInfo(int index) {
-    return rideRequestInfo_.get(index);
+  public generated.SegmentInfo getRideSegments(int index) {
+    return rideSegments_.get(index);
   }
   /**
-   * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+   * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
    */
   @java.lang.Override
-  public generated.RideRequestInfoOrBuilder getRideRequestInfoOrBuilder(
+  public generated.SegmentInfoOrBuilder getRideSegmentsOrBuilder(
       int index) {
-    return rideRequestInfo_.get(index);
+    return rideSegments_.get(index);
   }
 
   private byte memoizedIsInitialized = -1;
@@ -201,11 +201,11 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    for (int i = 0; i < rideOfferInfo_.size(); i++) {
-      output.writeMessage(1, rideOfferInfo_.get(i));
+    for (int i = 0; i < rideOffers_.size(); i++) {
+      output.writeMessage(1, rideOffers_.get(i));
     }
-    for (int i = 0; i < rideRequestInfo_.size(); i++) {
-      output.writeMessage(2, rideRequestInfo_.get(i));
+    for (int i = 0; i < rideSegments_.size(); i++) {
+      output.writeMessage(2, rideSegments_.get(i));
     }
     unknownFields.writeTo(output);
   }
@@ -216,13 +216,13 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    for (int i = 0; i < rideOfferInfo_.size(); i++) {
+    for (int i = 0; i < rideOffers_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(1, rideOfferInfo_.get(i));
+        .computeMessageSize(1, rideOffers_.get(i));
     }
-    for (int i = 0; i < rideRequestInfo_.size(); i++) {
+    for (int i = 0; i < rideSegments_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(2, rideRequestInfo_.get(i));
+        .computeMessageSize(2, rideSegments_.get(i));
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -239,10 +239,10 @@ private static final long serialVersionUID = 0L;
     }
     generated.SnapshotInfo other = (generated.SnapshotInfo) obj;
 
-    if (!getRideOfferInfoList()
-        .equals(other.getRideOfferInfoList())) return false;
-    if (!getRideRequestInfoList()
-        .equals(other.getRideRequestInfoList())) return false;
+    if (!getRideOffersList()
+        .equals(other.getRideOffersList())) return false;
+    if (!getRideSegmentsList()
+        .equals(other.getRideSegmentsList())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -254,13 +254,13 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    if (getRideOfferInfoCount() > 0) {
-      hash = (37 * hash) + RIDEOFFERINFO_FIELD_NUMBER;
-      hash = (53 * hash) + getRideOfferInfoList().hashCode();
+    if (getRideOffersCount() > 0) {
+      hash = (37 * hash) + RIDEOFFERS_FIELD_NUMBER;
+      hash = (53 * hash) + getRideOffersList().hashCode();
     }
-    if (getRideRequestInfoCount() > 0) {
-      hash = (37 * hash) + RIDEREQUESTINFO_FIELD_NUMBER;
-      hash = (53 * hash) + getRideRequestInfoList().hashCode();
+    if (getRideSegmentsCount() > 0) {
+      hash = (37 * hash) + RIDESEGMENTS_FIELD_NUMBER;
+      hash = (53 * hash) + getRideSegmentsList().hashCode();
     }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
@@ -390,24 +390,24 @@ private static final long serialVersionUID = 0L;
     private void maybeForceBuilderInitialization() {
       if (com.google.protobuf.GeneratedMessageV3
               .alwaysUseFieldBuilders) {
-        getRideOfferInfoFieldBuilder();
-        getRideRequestInfoFieldBuilder();
+        getRideOffersFieldBuilder();
+        getRideSegmentsFieldBuilder();
       }
     }
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      if (rideOfferInfoBuilder_ == null) {
-        rideOfferInfo_ = java.util.Collections.emptyList();
+      if (rideOffersBuilder_ == null) {
+        rideOffers_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000001);
       } else {
-        rideOfferInfoBuilder_.clear();
+        rideOffersBuilder_.clear();
       }
-      if (rideRequestInfoBuilder_ == null) {
-        rideRequestInfo_ = java.util.Collections.emptyList();
+      if (rideSegmentsBuilder_ == null) {
+        rideSegments_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
       } else {
-        rideRequestInfoBuilder_.clear();
+        rideSegmentsBuilder_.clear();
       }
       return this;
     }
@@ -436,23 +436,23 @@ private static final long serialVersionUID = 0L;
     public generated.SnapshotInfo buildPartial() {
       generated.SnapshotInfo result = new generated.SnapshotInfo(this);
       int from_bitField0_ = bitField0_;
-      if (rideOfferInfoBuilder_ == null) {
+      if (rideOffersBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
-          rideOfferInfo_ = java.util.Collections.unmodifiableList(rideOfferInfo_);
+          rideOffers_ = java.util.Collections.unmodifiableList(rideOffers_);
           bitField0_ = (bitField0_ & ~0x00000001);
         }
-        result.rideOfferInfo_ = rideOfferInfo_;
+        result.rideOffers_ = rideOffers_;
       } else {
-        result.rideOfferInfo_ = rideOfferInfoBuilder_.build();
+        result.rideOffers_ = rideOffersBuilder_.build();
       }
-      if (rideRequestInfoBuilder_ == null) {
+      if (rideSegmentsBuilder_ == null) {
         if (((bitField0_ & 0x00000002) != 0)) {
-          rideRequestInfo_ = java.util.Collections.unmodifiableList(rideRequestInfo_);
+          rideSegments_ = java.util.Collections.unmodifiableList(rideSegments_);
           bitField0_ = (bitField0_ & ~0x00000002);
         }
-        result.rideRequestInfo_ = rideRequestInfo_;
+        result.rideSegments_ = rideSegments_;
       } else {
-        result.rideRequestInfo_ = rideRequestInfoBuilder_.build();
+        result.rideSegments_ = rideSegmentsBuilder_.build();
       }
       onBuilt();
       return result;
@@ -502,55 +502,55 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(generated.SnapshotInfo other) {
       if (other == generated.SnapshotInfo.getDefaultInstance()) return this;
-      if (rideOfferInfoBuilder_ == null) {
-        if (!other.rideOfferInfo_.isEmpty()) {
-          if (rideOfferInfo_.isEmpty()) {
-            rideOfferInfo_ = other.rideOfferInfo_;
+      if (rideOffersBuilder_ == null) {
+        if (!other.rideOffers_.isEmpty()) {
+          if (rideOffers_.isEmpty()) {
+            rideOffers_ = other.rideOffers_;
             bitField0_ = (bitField0_ & ~0x00000001);
           } else {
-            ensureRideOfferInfoIsMutable();
-            rideOfferInfo_.addAll(other.rideOfferInfo_);
+            ensureRideOffersIsMutable();
+            rideOffers_.addAll(other.rideOffers_);
           }
           onChanged();
         }
       } else {
-        if (!other.rideOfferInfo_.isEmpty()) {
-          if (rideOfferInfoBuilder_.isEmpty()) {
-            rideOfferInfoBuilder_.dispose();
-            rideOfferInfoBuilder_ = null;
-            rideOfferInfo_ = other.rideOfferInfo_;
+        if (!other.rideOffers_.isEmpty()) {
+          if (rideOffersBuilder_.isEmpty()) {
+            rideOffersBuilder_.dispose();
+            rideOffersBuilder_ = null;
+            rideOffers_ = other.rideOffers_;
             bitField0_ = (bitField0_ & ~0x00000001);
-            rideOfferInfoBuilder_ = 
+            rideOffersBuilder_ = 
               com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                 getRideOfferInfoFieldBuilder() : null;
+                 getRideOffersFieldBuilder() : null;
           } else {
-            rideOfferInfoBuilder_.addAllMessages(other.rideOfferInfo_);
+            rideOffersBuilder_.addAllMessages(other.rideOffers_);
           }
         }
       }
-      if (rideRequestInfoBuilder_ == null) {
-        if (!other.rideRequestInfo_.isEmpty()) {
-          if (rideRequestInfo_.isEmpty()) {
-            rideRequestInfo_ = other.rideRequestInfo_;
+      if (rideSegmentsBuilder_ == null) {
+        if (!other.rideSegments_.isEmpty()) {
+          if (rideSegments_.isEmpty()) {
+            rideSegments_ = other.rideSegments_;
             bitField0_ = (bitField0_ & ~0x00000002);
           } else {
-            ensureRideRequestInfoIsMutable();
-            rideRequestInfo_.addAll(other.rideRequestInfo_);
+            ensureRideSegmentsIsMutable();
+            rideSegments_.addAll(other.rideSegments_);
           }
           onChanged();
         }
       } else {
-        if (!other.rideRequestInfo_.isEmpty()) {
-          if (rideRequestInfoBuilder_.isEmpty()) {
-            rideRequestInfoBuilder_.dispose();
-            rideRequestInfoBuilder_ = null;
-            rideRequestInfo_ = other.rideRequestInfo_;
+        if (!other.rideSegments_.isEmpty()) {
+          if (rideSegmentsBuilder_.isEmpty()) {
+            rideSegmentsBuilder_.dispose();
+            rideSegmentsBuilder_ = null;
+            rideSegments_ = other.rideSegments_;
             bitField0_ = (bitField0_ & ~0x00000002);
-            rideRequestInfoBuilder_ = 
+            rideSegmentsBuilder_ = 
               com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                 getRideRequestInfoFieldBuilder() : null;
+                 getRideSegmentsFieldBuilder() : null;
           } else {
-            rideRequestInfoBuilder_.addAllMessages(other.rideRequestInfo_);
+            rideSegmentsBuilder_.addAllMessages(other.rideSegments_);
           }
         }
       }
@@ -584,484 +584,484 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.util.List<generated.RideOfferInfo> rideOfferInfo_ =
+    private java.util.List<generated.RideOfferInfo> rideOffers_ =
       java.util.Collections.emptyList();
-    private void ensureRideOfferInfoIsMutable() {
+    private void ensureRideOffersIsMutable() {
       if (!((bitField0_ & 0x00000001) != 0)) {
-        rideOfferInfo_ = new java.util.ArrayList<generated.RideOfferInfo>(rideOfferInfo_);
+        rideOffers_ = new java.util.ArrayList<generated.RideOfferInfo>(rideOffers_);
         bitField0_ |= 0x00000001;
        }
     }
 
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        generated.RideOfferInfo, generated.RideOfferInfo.Builder, generated.RideOfferInfoOrBuilder> rideOfferInfoBuilder_;
+        generated.RideOfferInfo, generated.RideOfferInfo.Builder, generated.RideOfferInfoOrBuilder> rideOffersBuilder_;
 
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public java.util.List<generated.RideOfferInfo> getRideOfferInfoList() {
-      if (rideOfferInfoBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(rideOfferInfo_);
+    public java.util.List<generated.RideOfferInfo> getRideOffersList() {
+      if (rideOffersBuilder_ == null) {
+        return java.util.Collections.unmodifiableList(rideOffers_);
       } else {
-        return rideOfferInfoBuilder_.getMessageList();
+        return rideOffersBuilder_.getMessageList();
       }
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public int getRideOfferInfoCount() {
-      if (rideOfferInfoBuilder_ == null) {
-        return rideOfferInfo_.size();
+    public int getRideOffersCount() {
+      if (rideOffersBuilder_ == null) {
+        return rideOffers_.size();
       } else {
-        return rideOfferInfoBuilder_.getCount();
+        return rideOffersBuilder_.getCount();
       }
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public generated.RideOfferInfo getRideOfferInfo(int index) {
-      if (rideOfferInfoBuilder_ == null) {
-        return rideOfferInfo_.get(index);
+    public generated.RideOfferInfo getRideOffers(int index) {
+      if (rideOffersBuilder_ == null) {
+        return rideOffers_.get(index);
       } else {
-        return rideOfferInfoBuilder_.getMessage(index);
+        return rideOffersBuilder_.getMessage(index);
       }
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public Builder setRideOfferInfo(
+    public Builder setRideOffers(
         int index, generated.RideOfferInfo value) {
-      if (rideOfferInfoBuilder_ == null) {
+      if (rideOffersBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        ensureRideOfferInfoIsMutable();
-        rideOfferInfo_.set(index, value);
+        ensureRideOffersIsMutable();
+        rideOffers_.set(index, value);
         onChanged();
       } else {
-        rideOfferInfoBuilder_.setMessage(index, value);
+        rideOffersBuilder_.setMessage(index, value);
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public Builder setRideOfferInfo(
+    public Builder setRideOffers(
         int index, generated.RideOfferInfo.Builder builderForValue) {
-      if (rideOfferInfoBuilder_ == null) {
-        ensureRideOfferInfoIsMutable();
-        rideOfferInfo_.set(index, builderForValue.build());
+      if (rideOffersBuilder_ == null) {
+        ensureRideOffersIsMutable();
+        rideOffers_.set(index, builderForValue.build());
         onChanged();
       } else {
-        rideOfferInfoBuilder_.setMessage(index, builderForValue.build());
+        rideOffersBuilder_.setMessage(index, builderForValue.build());
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public Builder addRideOfferInfo(generated.RideOfferInfo value) {
-      if (rideOfferInfoBuilder_ == null) {
+    public Builder addRideOffers(generated.RideOfferInfo value) {
+      if (rideOffersBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        ensureRideOfferInfoIsMutable();
-        rideOfferInfo_.add(value);
+        ensureRideOffersIsMutable();
+        rideOffers_.add(value);
         onChanged();
       } else {
-        rideOfferInfoBuilder_.addMessage(value);
+        rideOffersBuilder_.addMessage(value);
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public Builder addRideOfferInfo(
+    public Builder addRideOffers(
         int index, generated.RideOfferInfo value) {
-      if (rideOfferInfoBuilder_ == null) {
+      if (rideOffersBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        ensureRideOfferInfoIsMutable();
-        rideOfferInfo_.add(index, value);
+        ensureRideOffersIsMutable();
+        rideOffers_.add(index, value);
         onChanged();
       } else {
-        rideOfferInfoBuilder_.addMessage(index, value);
+        rideOffersBuilder_.addMessage(index, value);
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public Builder addRideOfferInfo(
+    public Builder addRideOffers(
         generated.RideOfferInfo.Builder builderForValue) {
-      if (rideOfferInfoBuilder_ == null) {
-        ensureRideOfferInfoIsMutable();
-        rideOfferInfo_.add(builderForValue.build());
+      if (rideOffersBuilder_ == null) {
+        ensureRideOffersIsMutable();
+        rideOffers_.add(builderForValue.build());
         onChanged();
       } else {
-        rideOfferInfoBuilder_.addMessage(builderForValue.build());
+        rideOffersBuilder_.addMessage(builderForValue.build());
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public Builder addRideOfferInfo(
+    public Builder addRideOffers(
         int index, generated.RideOfferInfo.Builder builderForValue) {
-      if (rideOfferInfoBuilder_ == null) {
-        ensureRideOfferInfoIsMutable();
-        rideOfferInfo_.add(index, builderForValue.build());
+      if (rideOffersBuilder_ == null) {
+        ensureRideOffersIsMutable();
+        rideOffers_.add(index, builderForValue.build());
         onChanged();
       } else {
-        rideOfferInfoBuilder_.addMessage(index, builderForValue.build());
+        rideOffersBuilder_.addMessage(index, builderForValue.build());
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public Builder addAllRideOfferInfo(
+    public Builder addAllRideOffers(
         java.lang.Iterable<? extends generated.RideOfferInfo> values) {
-      if (rideOfferInfoBuilder_ == null) {
-        ensureRideOfferInfoIsMutable();
+      if (rideOffersBuilder_ == null) {
+        ensureRideOffersIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, rideOfferInfo_);
+            values, rideOffers_);
         onChanged();
       } else {
-        rideOfferInfoBuilder_.addAllMessages(values);
+        rideOffersBuilder_.addAllMessages(values);
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public Builder clearRideOfferInfo() {
-      if (rideOfferInfoBuilder_ == null) {
-        rideOfferInfo_ = java.util.Collections.emptyList();
+    public Builder clearRideOffers() {
+      if (rideOffersBuilder_ == null) {
+        rideOffers_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
       } else {
-        rideOfferInfoBuilder_.clear();
+        rideOffersBuilder_.clear();
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public Builder removeRideOfferInfo(int index) {
-      if (rideOfferInfoBuilder_ == null) {
-        ensureRideOfferInfoIsMutable();
-        rideOfferInfo_.remove(index);
+    public Builder removeRideOffers(int index) {
+      if (rideOffersBuilder_ == null) {
+        ensureRideOffersIsMutable();
+        rideOffers_.remove(index);
         onChanged();
       } else {
-        rideOfferInfoBuilder_.remove(index);
+        rideOffersBuilder_.remove(index);
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public generated.RideOfferInfo.Builder getRideOfferInfoBuilder(
+    public generated.RideOfferInfo.Builder getRideOffersBuilder(
         int index) {
-      return getRideOfferInfoFieldBuilder().getBuilder(index);
+      return getRideOffersFieldBuilder().getBuilder(index);
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public generated.RideOfferInfoOrBuilder getRideOfferInfoOrBuilder(
+    public generated.RideOfferInfoOrBuilder getRideOffersOrBuilder(
         int index) {
-      if (rideOfferInfoBuilder_ == null) {
-        return rideOfferInfo_.get(index);  } else {
-        return rideOfferInfoBuilder_.getMessageOrBuilder(index);
+      if (rideOffersBuilder_ == null) {
+        return rideOffers_.get(index);  } else {
+        return rideOffersBuilder_.getMessageOrBuilder(index);
       }
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
     public java.util.List<? extends generated.RideOfferInfoOrBuilder> 
-         getRideOfferInfoOrBuilderList() {
-      if (rideOfferInfoBuilder_ != null) {
-        return rideOfferInfoBuilder_.getMessageOrBuilderList();
+         getRideOffersOrBuilderList() {
+      if (rideOffersBuilder_ != null) {
+        return rideOffersBuilder_.getMessageOrBuilderList();
       } else {
-        return java.util.Collections.unmodifiableList(rideOfferInfo_);
+        return java.util.Collections.unmodifiableList(rideOffers_);
       }
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public generated.RideOfferInfo.Builder addRideOfferInfoBuilder() {
-      return getRideOfferInfoFieldBuilder().addBuilder(
+    public generated.RideOfferInfo.Builder addRideOffersBuilder() {
+      return getRideOffersFieldBuilder().addBuilder(
           generated.RideOfferInfo.getDefaultInstance());
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
-    public generated.RideOfferInfo.Builder addRideOfferInfoBuilder(
+    public generated.RideOfferInfo.Builder addRideOffersBuilder(
         int index) {
-      return getRideOfferInfoFieldBuilder().addBuilder(
+      return getRideOffersFieldBuilder().addBuilder(
           index, generated.RideOfferInfo.getDefaultInstance());
     }
     /**
-     * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+     * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
      */
     public java.util.List<generated.RideOfferInfo.Builder> 
-         getRideOfferInfoBuilderList() {
-      return getRideOfferInfoFieldBuilder().getBuilderList();
+         getRideOffersBuilderList() {
+      return getRideOffersFieldBuilder().getBuilderList();
     }
     private com.google.protobuf.RepeatedFieldBuilderV3<
         generated.RideOfferInfo, generated.RideOfferInfo.Builder, generated.RideOfferInfoOrBuilder> 
-        getRideOfferInfoFieldBuilder() {
-      if (rideOfferInfoBuilder_ == null) {
-        rideOfferInfoBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+        getRideOffersFieldBuilder() {
+      if (rideOffersBuilder_ == null) {
+        rideOffersBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
             generated.RideOfferInfo, generated.RideOfferInfo.Builder, generated.RideOfferInfoOrBuilder>(
-                rideOfferInfo_,
+                rideOffers_,
                 ((bitField0_ & 0x00000001) != 0),
                 getParentForChildren(),
                 isClean());
-        rideOfferInfo_ = null;
+        rideOffers_ = null;
       }
-      return rideOfferInfoBuilder_;
+      return rideOffersBuilder_;
     }
 
-    private java.util.List<generated.RideRequestInfo> rideRequestInfo_ =
+    private java.util.List<generated.SegmentInfo> rideSegments_ =
       java.util.Collections.emptyList();
-    private void ensureRideRequestInfoIsMutable() {
+    private void ensureRideSegmentsIsMutable() {
       if (!((bitField0_ & 0x00000002) != 0)) {
-        rideRequestInfo_ = new java.util.ArrayList<generated.RideRequestInfo>(rideRequestInfo_);
+        rideSegments_ = new java.util.ArrayList<generated.SegmentInfo>(rideSegments_);
         bitField0_ |= 0x00000002;
        }
     }
 
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        generated.RideRequestInfo, generated.RideRequestInfo.Builder, generated.RideRequestInfoOrBuilder> rideRequestInfoBuilder_;
+        generated.SegmentInfo, generated.SegmentInfo.Builder, generated.SegmentInfoOrBuilder> rideSegmentsBuilder_;
 
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public java.util.List<generated.RideRequestInfo> getRideRequestInfoList() {
-      if (rideRequestInfoBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(rideRequestInfo_);
+    public java.util.List<generated.SegmentInfo> getRideSegmentsList() {
+      if (rideSegmentsBuilder_ == null) {
+        return java.util.Collections.unmodifiableList(rideSegments_);
       } else {
-        return rideRequestInfoBuilder_.getMessageList();
+        return rideSegmentsBuilder_.getMessageList();
       }
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public int getRideRequestInfoCount() {
-      if (rideRequestInfoBuilder_ == null) {
-        return rideRequestInfo_.size();
+    public int getRideSegmentsCount() {
+      if (rideSegmentsBuilder_ == null) {
+        return rideSegments_.size();
       } else {
-        return rideRequestInfoBuilder_.getCount();
+        return rideSegmentsBuilder_.getCount();
       }
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public generated.RideRequestInfo getRideRequestInfo(int index) {
-      if (rideRequestInfoBuilder_ == null) {
-        return rideRequestInfo_.get(index);
+    public generated.SegmentInfo getRideSegments(int index) {
+      if (rideSegmentsBuilder_ == null) {
+        return rideSegments_.get(index);
       } else {
-        return rideRequestInfoBuilder_.getMessage(index);
+        return rideSegmentsBuilder_.getMessage(index);
       }
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public Builder setRideRequestInfo(
-        int index, generated.RideRequestInfo value) {
-      if (rideRequestInfoBuilder_ == null) {
+    public Builder setRideSegments(
+        int index, generated.SegmentInfo value) {
+      if (rideSegmentsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        ensureRideRequestInfoIsMutable();
-        rideRequestInfo_.set(index, value);
+        ensureRideSegmentsIsMutable();
+        rideSegments_.set(index, value);
         onChanged();
       } else {
-        rideRequestInfoBuilder_.setMessage(index, value);
+        rideSegmentsBuilder_.setMessage(index, value);
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public Builder setRideRequestInfo(
-        int index, generated.RideRequestInfo.Builder builderForValue) {
-      if (rideRequestInfoBuilder_ == null) {
-        ensureRideRequestInfoIsMutable();
-        rideRequestInfo_.set(index, builderForValue.build());
+    public Builder setRideSegments(
+        int index, generated.SegmentInfo.Builder builderForValue) {
+      if (rideSegmentsBuilder_ == null) {
+        ensureRideSegmentsIsMutable();
+        rideSegments_.set(index, builderForValue.build());
         onChanged();
       } else {
-        rideRequestInfoBuilder_.setMessage(index, builderForValue.build());
+        rideSegmentsBuilder_.setMessage(index, builderForValue.build());
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public Builder addRideRequestInfo(generated.RideRequestInfo value) {
-      if (rideRequestInfoBuilder_ == null) {
+    public Builder addRideSegments(generated.SegmentInfo value) {
+      if (rideSegmentsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        ensureRideRequestInfoIsMutable();
-        rideRequestInfo_.add(value);
+        ensureRideSegmentsIsMutable();
+        rideSegments_.add(value);
         onChanged();
       } else {
-        rideRequestInfoBuilder_.addMessage(value);
+        rideSegmentsBuilder_.addMessage(value);
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public Builder addRideRequestInfo(
-        int index, generated.RideRequestInfo value) {
-      if (rideRequestInfoBuilder_ == null) {
+    public Builder addRideSegments(
+        int index, generated.SegmentInfo value) {
+      if (rideSegmentsBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        ensureRideRequestInfoIsMutable();
-        rideRequestInfo_.add(index, value);
+        ensureRideSegmentsIsMutable();
+        rideSegments_.add(index, value);
         onChanged();
       } else {
-        rideRequestInfoBuilder_.addMessage(index, value);
+        rideSegmentsBuilder_.addMessage(index, value);
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public Builder addRideRequestInfo(
-        generated.RideRequestInfo.Builder builderForValue) {
-      if (rideRequestInfoBuilder_ == null) {
-        ensureRideRequestInfoIsMutable();
-        rideRequestInfo_.add(builderForValue.build());
+    public Builder addRideSegments(
+        generated.SegmentInfo.Builder builderForValue) {
+      if (rideSegmentsBuilder_ == null) {
+        ensureRideSegmentsIsMutable();
+        rideSegments_.add(builderForValue.build());
         onChanged();
       } else {
-        rideRequestInfoBuilder_.addMessage(builderForValue.build());
+        rideSegmentsBuilder_.addMessage(builderForValue.build());
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public Builder addRideRequestInfo(
-        int index, generated.RideRequestInfo.Builder builderForValue) {
-      if (rideRequestInfoBuilder_ == null) {
-        ensureRideRequestInfoIsMutable();
-        rideRequestInfo_.add(index, builderForValue.build());
+    public Builder addRideSegments(
+        int index, generated.SegmentInfo.Builder builderForValue) {
+      if (rideSegmentsBuilder_ == null) {
+        ensureRideSegmentsIsMutable();
+        rideSegments_.add(index, builderForValue.build());
         onChanged();
       } else {
-        rideRequestInfoBuilder_.addMessage(index, builderForValue.build());
+        rideSegmentsBuilder_.addMessage(index, builderForValue.build());
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public Builder addAllRideRequestInfo(
-        java.lang.Iterable<? extends generated.RideRequestInfo> values) {
-      if (rideRequestInfoBuilder_ == null) {
-        ensureRideRequestInfoIsMutable();
+    public Builder addAllRideSegments(
+        java.lang.Iterable<? extends generated.SegmentInfo> values) {
+      if (rideSegmentsBuilder_ == null) {
+        ensureRideSegmentsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, rideRequestInfo_);
+            values, rideSegments_);
         onChanged();
       } else {
-        rideRequestInfoBuilder_.addAllMessages(values);
+        rideSegmentsBuilder_.addAllMessages(values);
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public Builder clearRideRequestInfo() {
-      if (rideRequestInfoBuilder_ == null) {
-        rideRequestInfo_ = java.util.Collections.emptyList();
+    public Builder clearRideSegments() {
+      if (rideSegmentsBuilder_ == null) {
+        rideSegments_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
       } else {
-        rideRequestInfoBuilder_.clear();
+        rideSegmentsBuilder_.clear();
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public Builder removeRideRequestInfo(int index) {
-      if (rideRequestInfoBuilder_ == null) {
-        ensureRideRequestInfoIsMutable();
-        rideRequestInfo_.remove(index);
+    public Builder removeRideSegments(int index) {
+      if (rideSegmentsBuilder_ == null) {
+        ensureRideSegmentsIsMutable();
+        rideSegments_.remove(index);
         onChanged();
       } else {
-        rideRequestInfoBuilder_.remove(index);
+        rideSegmentsBuilder_.remove(index);
       }
       return this;
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public generated.RideRequestInfo.Builder getRideRequestInfoBuilder(
+    public generated.SegmentInfo.Builder getRideSegmentsBuilder(
         int index) {
-      return getRideRequestInfoFieldBuilder().getBuilder(index);
+      return getRideSegmentsFieldBuilder().getBuilder(index);
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public generated.RideRequestInfoOrBuilder getRideRequestInfoOrBuilder(
+    public generated.SegmentInfoOrBuilder getRideSegmentsOrBuilder(
         int index) {
-      if (rideRequestInfoBuilder_ == null) {
-        return rideRequestInfo_.get(index);  } else {
-        return rideRequestInfoBuilder_.getMessageOrBuilder(index);
+      if (rideSegmentsBuilder_ == null) {
+        return rideSegments_.get(index);  } else {
+        return rideSegmentsBuilder_.getMessageOrBuilder(index);
       }
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public java.util.List<? extends generated.RideRequestInfoOrBuilder> 
-         getRideRequestInfoOrBuilderList() {
-      if (rideRequestInfoBuilder_ != null) {
-        return rideRequestInfoBuilder_.getMessageOrBuilderList();
+    public java.util.List<? extends generated.SegmentInfoOrBuilder> 
+         getRideSegmentsOrBuilderList() {
+      if (rideSegmentsBuilder_ != null) {
+        return rideSegmentsBuilder_.getMessageOrBuilderList();
       } else {
-        return java.util.Collections.unmodifiableList(rideRequestInfo_);
+        return java.util.Collections.unmodifiableList(rideSegments_);
       }
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public generated.RideRequestInfo.Builder addRideRequestInfoBuilder() {
-      return getRideRequestInfoFieldBuilder().addBuilder(
-          generated.RideRequestInfo.getDefaultInstance());
+    public generated.SegmentInfo.Builder addRideSegmentsBuilder() {
+      return getRideSegmentsFieldBuilder().addBuilder(
+          generated.SegmentInfo.getDefaultInstance());
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public generated.RideRequestInfo.Builder addRideRequestInfoBuilder(
+    public generated.SegmentInfo.Builder addRideSegmentsBuilder(
         int index) {
-      return getRideRequestInfoFieldBuilder().addBuilder(
-          index, generated.RideRequestInfo.getDefaultInstance());
+      return getRideSegmentsFieldBuilder().addBuilder(
+          index, generated.SegmentInfo.getDefaultInstance());
     }
     /**
-     * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+     * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
      */
-    public java.util.List<generated.RideRequestInfo.Builder> 
-         getRideRequestInfoBuilderList() {
-      return getRideRequestInfoFieldBuilder().getBuilderList();
+    public java.util.List<generated.SegmentInfo.Builder> 
+         getRideSegmentsBuilderList() {
+      return getRideSegmentsFieldBuilder().getBuilderList();
     }
     private com.google.protobuf.RepeatedFieldBuilderV3<
-        generated.RideRequestInfo, generated.RideRequestInfo.Builder, generated.RideRequestInfoOrBuilder> 
-        getRideRequestInfoFieldBuilder() {
-      if (rideRequestInfoBuilder_ == null) {
-        rideRequestInfoBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-            generated.RideRequestInfo, generated.RideRequestInfo.Builder, generated.RideRequestInfoOrBuilder>(
-                rideRequestInfo_,
+        generated.SegmentInfo, generated.SegmentInfo.Builder, generated.SegmentInfoOrBuilder> 
+        getRideSegmentsFieldBuilder() {
+      if (rideSegmentsBuilder_ == null) {
+        rideSegmentsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+            generated.SegmentInfo, generated.SegmentInfo.Builder, generated.SegmentInfoOrBuilder>(
+                rideSegments_,
                 ((bitField0_ & 0x00000002) != 0),
                 getParentForChildren(),
                 isClean());
-        rideRequestInfo_ = null;
+        rideSegments_ = null;
       }
-      return rideRequestInfoBuilder_;
+      return rideSegmentsBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

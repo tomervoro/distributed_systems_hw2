@@ -32,19 +32,16 @@ public interface RideRequestOrBuilder extends
       getEndCityNameBytes();
 
   /**
-   * <code>.google.protobuf.Timestamp date = 3;</code>
-   * @return Whether the date field is set.
-   */
-  boolean hasDate();
-  /**
-   * <code>.google.protobuf.Timestamp date = 3;</code>
+   * <code>string date = 3;</code>
    * @return The date.
    */
-  com.google.protobuf.Timestamp getDate();
+  java.lang.String getDate();
   /**
-   * <code>.google.protobuf.Timestamp date = 3;</code>
+   * <code>string date = 3;</code>
+   * @return The bytes for date.
    */
-  com.google.protobuf.TimestampOrBuilder getDateOrBuilder();
+  com.google.protobuf.ByteString
+      getDateBytes();
 
   /**
    * <code>bool commit = 4;</code>
@@ -57,4 +54,31 @@ public interface RideRequestOrBuilder extends
    * @return The recursive.
    */
   boolean getRecursive();
+
+  /**
+   * <code>bool cancel = 6;</code>
+   * @return The cancel.
+   */
+  boolean getCancel();
+
+  /**
+   * <code>.google.protobuf.Timestamp requestTimestamp = 7;</code>
+   * @return Whether the requestTimestamp field is set.
+   */
+  boolean hasRequestTimestamp();
+  /**
+   * <code>.google.protobuf.Timestamp requestTimestamp = 7;</code>
+   * @return The requestTimestamp.
+   */
+  com.google.protobuf.Timestamp getRequestTimestamp();
+  /**
+   * <code>.google.protobuf.Timestamp requestTimestamp = 7;</code>
+   */
+  com.google.protobuf.TimestampOrBuilder getRequestTimestampOrBuilder();
+
+  /**
+   * <code>int32 index = 8;</code>
+   * @return The index.
+   */
+  int getIndex();
 }

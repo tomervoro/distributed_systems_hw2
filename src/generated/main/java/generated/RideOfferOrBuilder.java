@@ -56,19 +56,16 @@ public interface RideOfferOrBuilder extends
       getEndCityNameBytes();
 
   /**
-   * <code>.google.protobuf.Timestamp departureDate = 5;</code>
-   * @return Whether the departureDate field is set.
-   */
-  boolean hasDepartureDate();
-  /**
-   * <code>.google.protobuf.Timestamp departureDate = 5;</code>
+   * <code>string departureDate = 5;</code>
    * @return The departureDate.
    */
-  com.google.protobuf.Timestamp getDepartureDate();
+  java.lang.String getDepartureDate();
   /**
-   * <code>.google.protobuf.Timestamp departureDate = 5;</code>
+   * <code>string departureDate = 5;</code>
+   * @return The bytes for departureDate.
    */
-  com.google.protobuf.TimestampOrBuilder getDepartureDateOrBuilder();
+  com.google.protobuf.ByteString
+      getDepartureDateBytes();
 
   /**
    * <code>int32 vacancies = 6;</code>

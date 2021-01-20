@@ -18,6 +18,7 @@ private static final long serialVersionUID = 0L;
   private RideRequest() {
     startCityName_ = "";
     endCityName_ = "";
+    date_ = "";
   }
 
   @java.lang.Override
@@ -63,16 +64,9 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 26: {
-            com.google.protobuf.Timestamp.Builder subBuilder = null;
-            if (date_ != null) {
-              subBuilder = date_.toBuilder();
-            }
-            date_ = input.readMessage(com.google.protobuf.Timestamp.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(date_);
-              date_ = subBuilder.buildPartial();
-            }
+            java.lang.String s = input.readStringRequireUtf8();
 
+            date_ = s;
             break;
           }
           case 32: {
@@ -83,6 +77,29 @@ private static final long serialVersionUID = 0L;
           case 40: {
 
             recursive_ = input.readBool();
+            break;
+          }
+          case 48: {
+
+            cancel_ = input.readBool();
+            break;
+          }
+          case 58: {
+            com.google.protobuf.Timestamp.Builder subBuilder = null;
+            if (requestTimestamp_ != null) {
+              subBuilder = requestTimestamp_.toBuilder();
+            }
+            requestTimestamp_ = input.readMessage(com.google.protobuf.Timestamp.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(requestTimestamp_);
+              requestTimestamp_ = subBuilder.buildPartial();
+            }
+
+            break;
+          }
+          case 64: {
+
+            index_ = input.readInt32();
             break;
           }
           default: {
@@ -194,29 +211,41 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int DATE_FIELD_NUMBER = 3;
-  private com.google.protobuf.Timestamp date_;
+  private volatile java.lang.Object date_;
   /**
-   * <code>.google.protobuf.Timestamp date = 3;</code>
-   * @return Whether the date field is set.
-   */
-  @java.lang.Override
-  public boolean hasDate() {
-    return date_ != null;
-  }
-  /**
-   * <code>.google.protobuf.Timestamp date = 3;</code>
+   * <code>string date = 3;</code>
    * @return The date.
    */
   @java.lang.Override
-  public com.google.protobuf.Timestamp getDate() {
-    return date_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : date_;
+  public java.lang.String getDate() {
+    java.lang.Object ref = date_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      date_ = s;
+      return s;
+    }
   }
   /**
-   * <code>.google.protobuf.Timestamp date = 3;</code>
+   * <code>string date = 3;</code>
+   * @return The bytes for date.
    */
   @java.lang.Override
-  public com.google.protobuf.TimestampOrBuilder getDateOrBuilder() {
-    return getDate();
+  public com.google.protobuf.ByteString
+      getDateBytes() {
+    java.lang.Object ref = date_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      date_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   public static final int COMMIT_FIELD_NUMBER = 4;
@@ -241,6 +270,54 @@ private static final long serialVersionUID = 0L;
     return recursive_;
   }
 
+  public static final int CANCEL_FIELD_NUMBER = 6;
+  private boolean cancel_;
+  /**
+   * <code>bool cancel = 6;</code>
+   * @return The cancel.
+   */
+  @java.lang.Override
+  public boolean getCancel() {
+    return cancel_;
+  }
+
+  public static final int REQUESTTIMESTAMP_FIELD_NUMBER = 7;
+  private com.google.protobuf.Timestamp requestTimestamp_;
+  /**
+   * <code>.google.protobuf.Timestamp requestTimestamp = 7;</code>
+   * @return Whether the requestTimestamp field is set.
+   */
+  @java.lang.Override
+  public boolean hasRequestTimestamp() {
+    return requestTimestamp_ != null;
+  }
+  /**
+   * <code>.google.protobuf.Timestamp requestTimestamp = 7;</code>
+   * @return The requestTimestamp.
+   */
+  @java.lang.Override
+  public com.google.protobuf.Timestamp getRequestTimestamp() {
+    return requestTimestamp_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : requestTimestamp_;
+  }
+  /**
+   * <code>.google.protobuf.Timestamp requestTimestamp = 7;</code>
+   */
+  @java.lang.Override
+  public com.google.protobuf.TimestampOrBuilder getRequestTimestampOrBuilder() {
+    return getRequestTimestamp();
+  }
+
+  public static final int INDEX_FIELD_NUMBER = 8;
+  private int index_;
+  /**
+   * <code>int32 index = 8;</code>
+   * @return The index.
+   */
+  @java.lang.Override
+  public int getIndex() {
+    return index_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -261,14 +338,23 @@ private static final long serialVersionUID = 0L;
     if (!getEndCityNameBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, endCityName_);
     }
-    if (date_ != null) {
-      output.writeMessage(3, getDate());
+    if (!getDateBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, date_);
     }
     if (commit_ != false) {
       output.writeBool(4, commit_);
     }
     if (recursive_ != false) {
       output.writeBool(5, recursive_);
+    }
+    if (cancel_ != false) {
+      output.writeBool(6, cancel_);
+    }
+    if (requestTimestamp_ != null) {
+      output.writeMessage(7, getRequestTimestamp());
+    }
+    if (index_ != 0) {
+      output.writeInt32(8, index_);
     }
     unknownFields.writeTo(output);
   }
@@ -285,9 +371,8 @@ private static final long serialVersionUID = 0L;
     if (!getEndCityNameBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, endCityName_);
     }
-    if (date_ != null) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(3, getDate());
+    if (!getDateBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, date_);
     }
     if (commit_ != false) {
       size += com.google.protobuf.CodedOutputStream
@@ -296,6 +381,18 @@ private static final long serialVersionUID = 0L;
     if (recursive_ != false) {
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(5, recursive_);
+    }
+    if (cancel_ != false) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBoolSize(6, cancel_);
+    }
+    if (requestTimestamp_ != null) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(7, getRequestTimestamp());
+    }
+    if (index_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(8, index_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -316,15 +413,21 @@ private static final long serialVersionUID = 0L;
         .equals(other.getStartCityName())) return false;
     if (!getEndCityName()
         .equals(other.getEndCityName())) return false;
-    if (hasDate() != other.hasDate()) return false;
-    if (hasDate()) {
-      if (!getDate()
-          .equals(other.getDate())) return false;
-    }
+    if (!getDate()
+        .equals(other.getDate())) return false;
     if (getCommit()
         != other.getCommit()) return false;
     if (getRecursive()
         != other.getRecursive()) return false;
+    if (getCancel()
+        != other.getCancel()) return false;
+    if (hasRequestTimestamp() != other.hasRequestTimestamp()) return false;
+    if (hasRequestTimestamp()) {
+      if (!getRequestTimestamp()
+          .equals(other.getRequestTimestamp())) return false;
+    }
+    if (getIndex()
+        != other.getIndex()) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -340,16 +443,23 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getStartCityName().hashCode();
     hash = (37 * hash) + ENDCITYNAME_FIELD_NUMBER;
     hash = (53 * hash) + getEndCityName().hashCode();
-    if (hasDate()) {
-      hash = (37 * hash) + DATE_FIELD_NUMBER;
-      hash = (53 * hash) + getDate().hashCode();
-    }
+    hash = (37 * hash) + DATE_FIELD_NUMBER;
+    hash = (53 * hash) + getDate().hashCode();
     hash = (37 * hash) + COMMIT_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getCommit());
     hash = (37 * hash) + RECURSIVE_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getRecursive());
+    hash = (37 * hash) + CANCEL_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+        getCancel());
+    if (hasRequestTimestamp()) {
+      hash = (37 * hash) + REQUESTTIMESTAMP_FIELD_NUMBER;
+      hash = (53 * hash) + getRequestTimestamp().hashCode();
+    }
+    hash = (37 * hash) + INDEX_FIELD_NUMBER;
+    hash = (53 * hash) + getIndex();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -487,15 +597,21 @@ private static final long serialVersionUID = 0L;
 
       endCityName_ = "";
 
-      if (dateBuilder_ == null) {
-        date_ = null;
-      } else {
-        date_ = null;
-        dateBuilder_ = null;
-      }
+      date_ = "";
+
       commit_ = false;
 
       recursive_ = false;
+
+      cancel_ = false;
+
+      if (requestTimestampBuilder_ == null) {
+        requestTimestamp_ = null;
+      } else {
+        requestTimestamp_ = null;
+        requestTimestampBuilder_ = null;
+      }
+      index_ = 0;
 
       return this;
     }
@@ -525,13 +641,16 @@ private static final long serialVersionUID = 0L;
       generated.RideRequest result = new generated.RideRequest(this);
       result.startCityName_ = startCityName_;
       result.endCityName_ = endCityName_;
-      if (dateBuilder_ == null) {
-        result.date_ = date_;
-      } else {
-        result.date_ = dateBuilder_.build();
-      }
+      result.date_ = date_;
       result.commit_ = commit_;
       result.recursive_ = recursive_;
+      result.cancel_ = cancel_;
+      if (requestTimestampBuilder_ == null) {
+        result.requestTimestamp_ = requestTimestamp_;
+      } else {
+        result.requestTimestamp_ = requestTimestampBuilder_.build();
+      }
+      result.index_ = index_;
       onBuilt();
       return result;
     }
@@ -588,14 +707,24 @@ private static final long serialVersionUID = 0L;
         endCityName_ = other.endCityName_;
         onChanged();
       }
-      if (other.hasDate()) {
-        mergeDate(other.getDate());
+      if (!other.getDate().isEmpty()) {
+        date_ = other.date_;
+        onChanged();
       }
       if (other.getCommit() != false) {
         setCommit(other.getCommit());
       }
       if (other.getRecursive() != false) {
         setRecursive(other.getRecursive());
+      }
+      if (other.getCancel() != false) {
+        setCancel(other.getCancel());
+      }
+      if (other.hasRequestTimestamp()) {
+        mergeRequestTimestamp(other.getRequestTimestamp());
+      }
+      if (other.getIndex() != 0) {
+        setIndex(other.getIndex());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -778,123 +907,80 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private com.google.protobuf.Timestamp date_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder> dateBuilder_;
+    private java.lang.Object date_ = "";
     /**
-     * <code>.google.protobuf.Timestamp date = 3;</code>
-     * @return Whether the date field is set.
-     */
-    public boolean hasDate() {
-      return dateBuilder_ != null || date_ != null;
-    }
-    /**
-     * <code>.google.protobuf.Timestamp date = 3;</code>
+     * <code>string date = 3;</code>
      * @return The date.
      */
-    public com.google.protobuf.Timestamp getDate() {
-      if (dateBuilder_ == null) {
-        return date_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : date_;
+    public java.lang.String getDate() {
+      java.lang.Object ref = date_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        date_ = s;
+        return s;
       } else {
-        return dateBuilder_.getMessage();
+        return (java.lang.String) ref;
       }
     }
     /**
-     * <code>.google.protobuf.Timestamp date = 3;</code>
+     * <code>string date = 3;</code>
+     * @return The bytes for date.
      */
-    public Builder setDate(com.google.protobuf.Timestamp value) {
-      if (dateBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        date_ = value;
-        onChanged();
+    public com.google.protobuf.ByteString
+        getDateBytes() {
+      java.lang.Object ref = date_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        date_ = b;
+        return b;
       } else {
-        dateBuilder_.setMessage(value);
+        return (com.google.protobuf.ByteString) ref;
       }
-
-      return this;
     }
     /**
-     * <code>.google.protobuf.Timestamp date = 3;</code>
+     * <code>string date = 3;</code>
+     * @param value The date to set.
+     * @return This builder for chaining.
      */
     public Builder setDate(
-        com.google.protobuf.Timestamp.Builder builderForValue) {
-      if (dateBuilder_ == null) {
-        date_ = builderForValue.build();
-        onChanged();
-      } else {
-        dateBuilder_.setMessage(builderForValue.build());
-      }
-
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      date_ = value;
+      onChanged();
       return this;
     }
     /**
-     * <code>.google.protobuf.Timestamp date = 3;</code>
-     */
-    public Builder mergeDate(com.google.protobuf.Timestamp value) {
-      if (dateBuilder_ == null) {
-        if (date_ != null) {
-          date_ =
-            com.google.protobuf.Timestamp.newBuilder(date_).mergeFrom(value).buildPartial();
-        } else {
-          date_ = value;
-        }
-        onChanged();
-      } else {
-        dateBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.google.protobuf.Timestamp date = 3;</code>
+     * <code>string date = 3;</code>
+     * @return This builder for chaining.
      */
     public Builder clearDate() {
-      if (dateBuilder_ == null) {
-        date_ = null;
-        onChanged();
-      } else {
-        date_ = null;
-        dateBuilder_ = null;
-      }
-
+      
+      date_ = getDefaultInstance().getDate();
+      onChanged();
       return this;
     }
     /**
-     * <code>.google.protobuf.Timestamp date = 3;</code>
+     * <code>string date = 3;</code>
+     * @param value The bytes for date to set.
+     * @return This builder for chaining.
      */
-    public com.google.protobuf.Timestamp.Builder getDateBuilder() {
+    public Builder setDateBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
       
+      date_ = value;
       onChanged();
-      return getDateFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.google.protobuf.Timestamp date = 3;</code>
-     */
-    public com.google.protobuf.TimestampOrBuilder getDateOrBuilder() {
-      if (dateBuilder_ != null) {
-        return dateBuilder_.getMessageOrBuilder();
-      } else {
-        return date_ == null ?
-            com.google.protobuf.Timestamp.getDefaultInstance() : date_;
-      }
-    }
-    /**
-     * <code>.google.protobuf.Timestamp date = 3;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder> 
-        getDateFieldBuilder() {
-      if (dateBuilder_ == null) {
-        dateBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder>(
-                getDate(),
-                getParentForChildren(),
-                isClean());
-        date_ = null;
-      }
-      return dateBuilder_;
+      return this;
     }
 
     private boolean commit_ ;
@@ -955,6 +1041,187 @@ private static final long serialVersionUID = 0L;
     public Builder clearRecursive() {
       
       recursive_ = false;
+      onChanged();
+      return this;
+    }
+
+    private boolean cancel_ ;
+    /**
+     * <code>bool cancel = 6;</code>
+     * @return The cancel.
+     */
+    @java.lang.Override
+    public boolean getCancel() {
+      return cancel_;
+    }
+    /**
+     * <code>bool cancel = 6;</code>
+     * @param value The cancel to set.
+     * @return This builder for chaining.
+     */
+    public Builder setCancel(boolean value) {
+      
+      cancel_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>bool cancel = 6;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearCancel() {
+      
+      cancel_ = false;
+      onChanged();
+      return this;
+    }
+
+    private com.google.protobuf.Timestamp requestTimestamp_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder> requestTimestampBuilder_;
+    /**
+     * <code>.google.protobuf.Timestamp requestTimestamp = 7;</code>
+     * @return Whether the requestTimestamp field is set.
+     */
+    public boolean hasRequestTimestamp() {
+      return requestTimestampBuilder_ != null || requestTimestamp_ != null;
+    }
+    /**
+     * <code>.google.protobuf.Timestamp requestTimestamp = 7;</code>
+     * @return The requestTimestamp.
+     */
+    public com.google.protobuf.Timestamp getRequestTimestamp() {
+      if (requestTimestampBuilder_ == null) {
+        return requestTimestamp_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : requestTimestamp_;
+      } else {
+        return requestTimestampBuilder_.getMessage();
+      }
+    }
+    /**
+     * <code>.google.protobuf.Timestamp requestTimestamp = 7;</code>
+     */
+    public Builder setRequestTimestamp(com.google.protobuf.Timestamp value) {
+      if (requestTimestampBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        requestTimestamp_ = value;
+        onChanged();
+      } else {
+        requestTimestampBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.Timestamp requestTimestamp = 7;</code>
+     */
+    public Builder setRequestTimestamp(
+        com.google.protobuf.Timestamp.Builder builderForValue) {
+      if (requestTimestampBuilder_ == null) {
+        requestTimestamp_ = builderForValue.build();
+        onChanged();
+      } else {
+        requestTimestampBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.Timestamp requestTimestamp = 7;</code>
+     */
+    public Builder mergeRequestTimestamp(com.google.protobuf.Timestamp value) {
+      if (requestTimestampBuilder_ == null) {
+        if (requestTimestamp_ != null) {
+          requestTimestamp_ =
+            com.google.protobuf.Timestamp.newBuilder(requestTimestamp_).mergeFrom(value).buildPartial();
+        } else {
+          requestTimestamp_ = value;
+        }
+        onChanged();
+      } else {
+        requestTimestampBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.Timestamp requestTimestamp = 7;</code>
+     */
+    public Builder clearRequestTimestamp() {
+      if (requestTimestampBuilder_ == null) {
+        requestTimestamp_ = null;
+        onChanged();
+      } else {
+        requestTimestamp_ = null;
+        requestTimestampBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.Timestamp requestTimestamp = 7;</code>
+     */
+    public com.google.protobuf.Timestamp.Builder getRequestTimestampBuilder() {
+      
+      onChanged();
+      return getRequestTimestampFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.google.protobuf.Timestamp requestTimestamp = 7;</code>
+     */
+    public com.google.protobuf.TimestampOrBuilder getRequestTimestampOrBuilder() {
+      if (requestTimestampBuilder_ != null) {
+        return requestTimestampBuilder_.getMessageOrBuilder();
+      } else {
+        return requestTimestamp_ == null ?
+            com.google.protobuf.Timestamp.getDefaultInstance() : requestTimestamp_;
+      }
+    }
+    /**
+     * <code>.google.protobuf.Timestamp requestTimestamp = 7;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder> 
+        getRequestTimestampFieldBuilder() {
+      if (requestTimestampBuilder_ == null) {
+        requestTimestampBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder>(
+                getRequestTimestamp(),
+                getParentForChildren(),
+                isClean());
+        requestTimestamp_ = null;
+      }
+      return requestTimestampBuilder_;
+    }
+
+    private int index_ ;
+    /**
+     * <code>int32 index = 8;</code>
+     * @return The index.
+     */
+    @java.lang.Override
+    public int getIndex() {
+      return index_;
+    }
+    /**
+     * <code>int32 index = 8;</code>
+     * @param value The index to set.
+     * @return This builder for chaining.
+     */
+    public Builder setIndex(int value) {
+      
+      index_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int32 index = 8;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearIndex() {
+      
+      index_ = 0;
       onChanged();
       return this;
     }

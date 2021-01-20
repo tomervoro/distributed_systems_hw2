@@ -80,6 +80,7 @@ message RideRequest{
   bool recursive = 5;
   bool cancel = 6;
   google.protobuf.Timestamp requestTimestamp = 7;
+  int32 index = 8;
 }
 
 
@@ -88,6 +89,7 @@ message Path{
     string startCityName =1;
     string endCityName =2;
     string driverName = 3;
+    int32 index = 4;
   }
   repeated Segment segments = 1;
 }

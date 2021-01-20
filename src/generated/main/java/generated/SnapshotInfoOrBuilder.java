@@ -8,50 +8,50 @@ public interface SnapshotInfoOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+   * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
    */
   java.util.List<generated.RideOfferInfo> 
-      getRideOfferInfoList();
+      getRideOffersList();
   /**
-   * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+   * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
    */
-  generated.RideOfferInfo getRideOfferInfo(int index);
+  generated.RideOfferInfo getRideOffers(int index);
   /**
-   * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+   * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
    */
-  int getRideOfferInfoCount();
+  int getRideOffersCount();
   /**
-   * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+   * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
    */
   java.util.List<? extends generated.RideOfferInfoOrBuilder> 
-      getRideOfferInfoOrBuilderList();
+      getRideOffersOrBuilderList();
   /**
-   * <code>repeated .servercommunication.RideOfferInfo rideOfferInfo = 1;</code>
+   * <code>repeated .servercommunication.RideOfferInfo rideOffers = 1;</code>
    */
-  generated.RideOfferInfoOrBuilder getRideOfferInfoOrBuilder(
+  generated.RideOfferInfoOrBuilder getRideOffersOrBuilder(
       int index);
 
   /**
-   * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+   * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
    */
-  java.util.List<generated.RideRequestInfo> 
-      getRideRequestInfoList();
+  java.util.List<generated.SegmentInfo> 
+      getRideSegmentsList();
   /**
-   * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+   * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
    */
-  generated.RideRequestInfo getRideRequestInfo(int index);
+  generated.SegmentInfo getRideSegments(int index);
   /**
-   * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+   * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
    */
-  int getRideRequestInfoCount();
+  int getRideSegmentsCount();
   /**
-   * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+   * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
    */
-  java.util.List<? extends generated.RideRequestInfoOrBuilder> 
-      getRideRequestInfoOrBuilderList();
+  java.util.List<? extends generated.SegmentInfoOrBuilder> 
+      getRideSegmentsOrBuilderList();
   /**
-   * <code>repeated .servercommunication.RideRequestInfo rideRequestInfo = 2;</code>
+   * <code>repeated .servercommunication.SegmentInfo rideSegments = 2;</code>
    */
-  generated.RideRequestInfoOrBuilder getRideRequestInfoOrBuilder(
+  generated.SegmentInfoOrBuilder getRideSegmentsOrBuilder(
       int index);
 }

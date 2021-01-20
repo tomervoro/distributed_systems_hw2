@@ -100,6 +100,10 @@ private static final long serialVersionUID = 0L;
      * <code>FAILURE = 1;</code>
      */
     FAILURE(1),
+    /**
+     * <code>RIDE_ALREADY_EXISTS = 2;</code>
+     */
+    RIDE_ALREADY_EXISTS(2),
     UNRECOGNIZED(-1),
     ;
 
@@ -111,6 +115,10 @@ private static final long serialVersionUID = 0L;
      * <code>FAILURE = 1;</code>
      */
     public static final int FAILURE_VALUE = 1;
+    /**
+     * <code>RIDE_ALREADY_EXISTS = 2;</code>
+     */
+    public static final int RIDE_ALREADY_EXISTS_VALUE = 2;
 
 
     public final int getNumber() {
@@ -139,6 +147,7 @@ private static final long serialVersionUID = 0L;
       switch (value) {
         case 0: return SUCCESS;
         case 1: return FAILURE;
+        case 2: return RIDE_ALREADY_EXISTS;
         default: return null;
       }
     }

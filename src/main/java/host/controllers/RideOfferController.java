@@ -82,16 +82,18 @@ public class RideOfferController {
             RideOffer currOffer = segment.getOffer();
             List<Path.Segment> newRequestPath = new ArrayList<>(tmpBuilder.getRequestPath().getSegmentsList());
             newRequestPath.add(
-                    Path.Segment.newBuilder().setStartCityName(currRequest.getStartCityName()).setEndCityName(currRequest.getEndCityName()).build()
+                    Path.Segment.newBuilder().setStartCityName(currRequest.getStartCityName())
+                                                .setEndCityName(currRequest.getEndCityName())
+                                                .setIndex(currRequest.getIndex()).build()
             );
             List<Path.Segment> newOffersPath = new ArrayList<>(tmpBuilder.getGivenPath().getSegmentsList());
             newOffersPath.add(
                     Path.Segment.newBuilder().setDriverName(currOffer.getPersonName()).setStartCityName(currOffer.getStartCityName()).setEndCityName(currOffer.getEndCityName()).build()
             );
-
             tmpBuilder.setRequestPath(Path.newBuilder().addAllSegments(newRequestPath));
             tmpBuilder.setGivenPath(Path.newBuilder().addAllSegments(newOffersPath));
         }
+
         List<SystemSnapshot.PlannedPath> paths = path_builders.values().stream().map(SystemSnapshot.PlannedPath.Builder::build).collect(Collectors.toList());
         builder.addAllPlannedPaths(paths);
         SystemSnapshot result = builder.build();
@@ -139,7 +141,7 @@ public class RideOfferController {
 
             for (int i = 0; i < path.size() - 1; i++) {
                 // try to reserve space for each segment of the ride
-                ret = dispatchPathSegment(path.get(i), path.get(i + 1), date, requestTimestamp);
+                ret = dispatchPathSegment(path.get(i), path.get(i + 1), date, requestTimestamp,i);
                 if (ret != null) {
                     routePlan.add(ret);
                 } else {
@@ -180,7 +182,7 @@ public class RideOfferController {
                     .setDate(offer.getDepartureDate())
                     .setCancel(false)
                     .setCommit(true)
-                    .setRequestTimestamp(requestTimestamp)
+                    .setRequestTimestamp(requestTimestamp).setIndex(-1) // test
                     .build();
             if (ShardInfo.getShardInfo().getCityName().equals(offer.getStartCityName())) {
                 grpcServer.commitOrAbortRideRequestImpl(req);
@@ -199,7 +201,7 @@ public class RideOfferController {
                     .setDate(offer.getDepartureDate())
                     .setCancel(true)
                     .setCommit(false)
-                    .setRequestTimestamp(requestTimestamp)
+                    .setRequestTimestamp(requestTimestamp).setIndex(-1) // test
                     .build();
             if (ShardInfo.getShardInfo().getCityName().equals(offer.getStartCityName())) {
                 grpcServer.commitOrAbortRideRequestImpl(req);
@@ -209,7 +211,7 @@ public class RideOfferController {
         }
     }
 
-    RideOffer dispatchPathSegment(String startCityName, String endCityName, String date, Timestamp requestTimestamp) {
+    RideOffer dispatchPathSegment(String startCityName, String endCityName, String date, Timestamp requestTimestamp, int index) {
         RideRequest req = RideRequest.newBuilder()
                 .setRecursive(true)
                 .setStartCityName(startCityName)
@@ -218,6 +220,7 @@ public class RideOfferController {
                 .setCancel(false)
                 .setCommit(false)
                 .setRequestTimestamp(requestTimestamp)
+                .setIndex(index)
                 .build();
         RideOffer possibleRide;
         if (ShardInfo.getShardInfo().getCityName().equals(startCityName)) {

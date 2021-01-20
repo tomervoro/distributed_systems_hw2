@@ -25,15 +25,15 @@ public class CityRepository {
 //
         City haifa = new City(1, 1, "Haifa", 21002);
 //
-//        City jerusalem = new City(0, 2, "Jerusalem", 21003);
+       City jerusalem = new City(3, 4, "Jerusalem", 21003);
 //
-//        City yaffo = new City(0, 1, "Yaffo", 21004);
+        City yaffo = new City(0, 1, "Yaffo", 21004);
 
         cities.put("TLV", telAviv);
         cities.put("Netanya", netanya);
         cities.put("Haifa", haifa);
-//        cities.put("Jerusalem", jerusalem);
-//        cities.put("Yaffo", yaffo);
+        cities.put("Jerusalem", jerusalem);
+        // cities.put("Yaffo", yaffo);
     }
 
 

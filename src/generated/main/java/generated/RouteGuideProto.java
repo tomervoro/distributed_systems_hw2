@@ -30,10 +30,10 @@ public final class RouteGuideProto {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_servercommunication_RideOfferInfo_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_servercommunication_RideRequestInfo_descriptor;
+    internal_static_servercommunication_SegmentInfo_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_servercommunication_RideRequestInfo_fieldAccessorTable;
+      internal_static_servercommunication_SegmentInfo_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
     internal_static_servercommunication_RideOffer_descriptor;
   static final 
@@ -49,6 +49,26 @@ public final class RouteGuideProto {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_servercommunication_RideRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_servercommunication_Path_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_servercommunication_Path_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_servercommunication_Path_Segment_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_servercommunication_Path_Segment_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_servercommunication_SystemSnapshot_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_servercommunication_SystemSnapshot_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_servercommunication_SystemSnapshot_PlannedPath_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_servercommunication_SystemSnapshot_PlannedPath_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -60,36 +80,49 @@ public final class RouteGuideProto {
     java.lang.String[] descriptorData = {
       "\n\014scheme.proto\022\023servercommunication\032\037goo" +
       "gle/protobuf/timestamp.proto\"\026\n\005Dummy\022\r\n" +
-      "\005dummy\030\001 \001(\010\"\210\001\n\014SnapshotInfo\0229\n\rrideOff" +
-      "erInfo\030\001 \003(\0132\".servercommunication.RideO" +
-      "fferInfo\022=\n\017rideRequestInfo\030\002 \003(\0132$.serv" +
-      "ercommunication.RideRequestInfo\"W\n\rRideO" +
-      "fferInfo\0221\n\trideOffer\030\001 \001(\0132\036.servercomm" +
-      "unication.RideOffer\022\023\n\013taken_spots\030\002 \001(\005" +
-      "\"X\n\017RideRequestInfo\022\021\n\tsatisfied\030\001 \001(\005\0222" +
-      "\n\010requests\030\002 \003(\0132 .servercommunication.R" +
-      "ideRequest\"\302\001\n\tRideOffer\022\022\n\npersonName\030\001" +
-      " \001(\t\022\023\n\013phoneNumber\030\002 \001(\t\022\025\n\rstartCityNa" +
-      "me\030\003 \001(\t\022\023\n\013endCityName\030\004 \001(\t\0221\n\rdepartu" +
-      "reDate\030\005 \001(\0132\032.google.protobuf.Timestamp" +
-      "\022\021\n\tvacancies\030\006 \001(\005\022\032\n\022permittedDeviatio" +
-      "n\030\007 \001(\005\"p\n\016ServerResponse\022:\n\006result\030\001 \001(" +
-      "\0162*.servercommunication.ServerResponse.R" +
-      "esult\"\"\n\006Result\022\013\n\007SUCCESS\020\000\022\013\n\007FAILURE\020" +
-      "\001\"\206\001\n\013RideRequest\022\025\n\rstartCityName\030\001 \001(\t" +
-      "\022\023\n\013endCityName\030\002 \001(\t\022(\n\004date\030\003 \001(\0132\032.go" +
-      "ogle.protobuf.Timestamp\022\016\n\006commit\030\004 \001(\010\022" +
-      "\021\n\trecursive\030\005 \001(\0102\336\002\n\nServerComm\022P\n\toff" +
-      "erRide\022\036.servercommunication.RideOffer\032#" +
-      ".servercommunication.ServerResponse\022K\n\007a" +
-      "skRide\022 .servercommunication.RideRequest" +
-      "\032\036.servercommunication.RideOffer\022a\n\030comm" +
-      "itOrAbortRideRequest\022 .servercommunicati" +
-      "on.RideRequest\032#.servercommunication.Ser" +
-      "verResponse\022N\n\013getSnapshot\022\032.servercommu" +
-      "nication.Dummy\032!.servercommunication.Sna" +
-      "pshotInfo0\001B$\n\tgeneratedB\017RouteGuideProt" +
-      "oP\001\242\002\003RTGb\006proto3"
+      "\005dummy\030\001 \001(\010\"~\n\014SnapshotInfo\0226\n\nrideOffe" +
+      "rs\030\001 \003(\0132\".servercommunication.RideOffer" +
+      "Info\0226\n\014rideSegments\030\002 \003(\0132 .servercommu" +
+      "nication.SegmentInfo\"W\n\rRideOfferInfo\0221\n" +
+      "\trideOffer\030\001 \001(\0132\036.servercommunication.R" +
+      "ideOffer\022\023\n\013taken_spots\030\002 \001(\005\"\205\001\n\013Segmen" +
+      "tInfo\022\024\n\014is_satisfied\030\001 \001(\010\0221\n\007request\030\002" +
+      " \001(\0132 .servercommunication.RideRequest\022-" +
+      "\n\005offer\030\003 \001(\0132\036.servercommunication.Ride" +
+      "Offer\"\246\001\n\tRideOffer\022\022\n\npersonName\030\001 \001(\t\022" +
+      "\023\n\013phoneNumber\030\002 \001(\t\022\025\n\rstartCityName\030\003 " +
+      "\001(\t\022\023\n\013endCityName\030\004 \001(\t\022\025\n\rdepartureDat" +
+      "e\030\005 \001(\t\022\021\n\tvacancies\030\006 \001(\005\022\032\n\022permittedD" +
+      "eviation\030\007 \001(\005\"\211\001\n\016ServerResponse\022:\n\006res" +
+      "ult\030\001 \001(\0162*.servercommunication.ServerRe" +
+      "sponse.Result\";\n\006Result\022\013\n\007SUCCESS\020\000\022\013\n\007" +
+      "FAILURE\020\001\022\027\n\023RIDE_ALREADY_EXISTS\020\002\"\277\001\n\013R" +
+      "ideRequest\022\025\n\rstartCityName\030\001 \001(\t\022\023\n\013end" +
+      "CityName\030\002 \001(\t\022\014\n\004date\030\003 \001(\t\022\016\n\006commit\030\004" +
+      " \001(\010\022\021\n\trecursive\030\005 \001(\010\022\016\n\006cancel\030\006 \001(\010\022" +
+      "4\n\020requestTimestamp\030\007 \001(\0132\032.google.proto" +
+      "buf.Timestamp\022\r\n\005index\030\010 \001(\005\"\225\001\n\004Path\0223\n" +
+      "\010segments\030\001 \003(\0132!.servercommunication.Pa" +
+      "th.Segment\032X\n\007Segment\022\025\n\rstartCityName\030\001" +
+      " \001(\t\022\023\n\013endCityName\030\002 \001(\t\022\022\n\ndriverName\030" +
+      "\003 \001(\t\022\r\n\005index\030\004 \001(\005\"\242\002\n\016SystemSnapshot\022" +
+      "6\n\nrideOffers\030\001 \003(\0132\".servercommunicatio" +
+      "n.RideOfferInfo\022F\n\rplanned_paths\030\002 \003(\0132/" +
+      ".servercommunication.SystemSnapshot.Plan" +
+      "nedPath\032\217\001\n\013PlannedPath\022\024\n\014is_satisfied\030" +
+      "\001 \001(\010\022\014\n\004date\030\002 \001(\t\022.\n\013requestPath\030\003 \001(\013" +
+      "2\031.servercommunication.Path\022,\n\tgivenPath" +
+      "\030\004 \001(\0132\031.servercommunication.Path2\334\002\n\nSe" +
+      "rverComm\022P\n\tofferRide\022\036.servercommunicat" +
+      "ion.RideOffer\032#.servercommunication.Serv" +
+      "erResponse\022K\n\007askRide\022 .servercommunicat" +
+      "ion.RideRequest\032\036.servercommunication.Ri" +
+      "deOffer\022a\n\030commitOrAbortRideRequest\022 .se" +
+      "rvercommunication.RideRequest\032#.serverco" +
+      "mmunication.ServerResponse\022L\n\013getSnapsho" +
+      "t\022\032.servercommunication.Dummy\032!.serverco" +
+      "mmunication.SnapshotInfoB$\n\tgeneratedB\017R" +
+      "outeGuideProtoP\001\242\002\003RTGb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -107,19 +140,19 @@ public final class RouteGuideProto {
     internal_static_servercommunication_SnapshotInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_servercommunication_SnapshotInfo_descriptor,
-        new java.lang.String[] { "RideOfferInfo", "RideRequestInfo", });
+        new java.lang.String[] { "RideOffers", "RideSegments", });
     internal_static_servercommunication_RideOfferInfo_descriptor =
       getDescriptor().getMessageTypes().get(2);
     internal_static_servercommunication_RideOfferInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_servercommunication_RideOfferInfo_descriptor,
         new java.lang.String[] { "RideOffer", "TakenSpots", });
-    internal_static_servercommunication_RideRequestInfo_descriptor =
+    internal_static_servercommunication_SegmentInfo_descriptor =
       getDescriptor().getMessageTypes().get(3);
-    internal_static_servercommunication_RideRequestInfo_fieldAccessorTable = new
+    internal_static_servercommunication_SegmentInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_servercommunication_RideRequestInfo_descriptor,
-        new java.lang.String[] { "Satisfied", "Requests", });
+        internal_static_servercommunication_SegmentInfo_descriptor,
+        new java.lang.String[] { "IsSatisfied", "Request", "Offer", });
     internal_static_servercommunication_RideOffer_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_servercommunication_RideOffer_fieldAccessorTable = new
@@ -137,7 +170,31 @@ public final class RouteGuideProto {
     internal_static_servercommunication_RideRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_servercommunication_RideRequest_descriptor,
-        new java.lang.String[] { "StartCityName", "EndCityName", "Date", "Commit", "Recursive", });
+        new java.lang.String[] { "StartCityName", "EndCityName", "Date", "Commit", "Recursive", "Cancel", "RequestTimestamp", "Index", });
+    internal_static_servercommunication_Path_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_servercommunication_Path_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_servercommunication_Path_descriptor,
+        new java.lang.String[] { "Segments", });
+    internal_static_servercommunication_Path_Segment_descriptor =
+      internal_static_servercommunication_Path_descriptor.getNestedTypes().get(0);
+    internal_static_servercommunication_Path_Segment_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_servercommunication_Path_Segment_descriptor,
+        new java.lang.String[] { "StartCityName", "EndCityName", "DriverName", "Index", });
+    internal_static_servercommunication_SystemSnapshot_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_servercommunication_SystemSnapshot_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_servercommunication_SystemSnapshot_descriptor,
+        new java.lang.String[] { "RideOffers", "PlannedPaths", });
+    internal_static_servercommunication_SystemSnapshot_PlannedPath_descriptor =
+      internal_static_servercommunication_SystemSnapshot_descriptor.getNestedTypes().get(0);
+    internal_static_servercommunication_SystemSnapshot_PlannedPath_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_servercommunication_SystemSnapshot_PlannedPath_descriptor,
+        new java.lang.String[] { "IsSatisfied", "Date", "RequestPath", "GivenPath", });
     com.google.protobuf.TimestampProto.getDescriptor();
   }
 

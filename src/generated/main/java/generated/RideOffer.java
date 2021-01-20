@@ -20,6 +20,7 @@ private static final long serialVersionUID = 0L;
     phoneNumber_ = "";
     startCityName_ = "";
     endCityName_ = "";
+    departureDate_ = "";
   }
 
   @java.lang.Override
@@ -77,16 +78,9 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 42: {
-            com.google.protobuf.Timestamp.Builder subBuilder = null;
-            if (departureDate_ != null) {
-              subBuilder = departureDate_.toBuilder();
-            }
-            departureDate_ = input.readMessage(com.google.protobuf.Timestamp.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(departureDate_);
-              departureDate_ = subBuilder.buildPartial();
-            }
+            java.lang.String s = input.readStringRequireUtf8();
 
+            departureDate_ = s;
             break;
           }
           case 48: {
@@ -284,29 +278,41 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int DEPARTUREDATE_FIELD_NUMBER = 5;
-  private com.google.protobuf.Timestamp departureDate_;
+  private volatile java.lang.Object departureDate_;
   /**
-   * <code>.google.protobuf.Timestamp departureDate = 5;</code>
-   * @return Whether the departureDate field is set.
-   */
-  @java.lang.Override
-  public boolean hasDepartureDate() {
-    return departureDate_ != null;
-  }
-  /**
-   * <code>.google.protobuf.Timestamp departureDate = 5;</code>
+   * <code>string departureDate = 5;</code>
    * @return The departureDate.
    */
   @java.lang.Override
-  public com.google.protobuf.Timestamp getDepartureDate() {
-    return departureDate_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : departureDate_;
+  public java.lang.String getDepartureDate() {
+    java.lang.Object ref = departureDate_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      departureDate_ = s;
+      return s;
+    }
   }
   /**
-   * <code>.google.protobuf.Timestamp departureDate = 5;</code>
+   * <code>string departureDate = 5;</code>
+   * @return The bytes for departureDate.
    */
   @java.lang.Override
-  public com.google.protobuf.TimestampOrBuilder getDepartureDateOrBuilder() {
-    return getDepartureDate();
+  public com.google.protobuf.ByteString
+      getDepartureDateBytes() {
+    java.lang.Object ref = departureDate_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      departureDate_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   public static final int VACANCIES_FIELD_NUMBER = 6;
@@ -357,8 +363,8 @@ private static final long serialVersionUID = 0L;
     if (!getEndCityNameBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 4, endCityName_);
     }
-    if (departureDate_ != null) {
-      output.writeMessage(5, getDepartureDate());
+    if (!getDepartureDateBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, departureDate_);
     }
     if (vacancies_ != 0) {
       output.writeInt32(6, vacancies_);
@@ -387,9 +393,8 @@ private static final long serialVersionUID = 0L;
     if (!getEndCityNameBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, endCityName_);
     }
-    if (departureDate_ != null) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(5, getDepartureDate());
+    if (!getDepartureDateBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, departureDate_);
     }
     if (vacancies_ != 0) {
       size += com.google.protobuf.CodedOutputStream
@@ -422,11 +427,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getStartCityName())) return false;
     if (!getEndCityName()
         .equals(other.getEndCityName())) return false;
-    if (hasDepartureDate() != other.hasDepartureDate()) return false;
-    if (hasDepartureDate()) {
-      if (!getDepartureDate()
-          .equals(other.getDepartureDate())) return false;
-    }
+    if (!getDepartureDate()
+        .equals(other.getDepartureDate())) return false;
     if (getVacancies()
         != other.getVacancies()) return false;
     if (getPermittedDeviation()
@@ -450,10 +452,8 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getStartCityName().hashCode();
     hash = (37 * hash) + ENDCITYNAME_FIELD_NUMBER;
     hash = (53 * hash) + getEndCityName().hashCode();
-    if (hasDepartureDate()) {
-      hash = (37 * hash) + DEPARTUREDATE_FIELD_NUMBER;
-      hash = (53 * hash) + getDepartureDate().hashCode();
-    }
+    hash = (37 * hash) + DEPARTUREDATE_FIELD_NUMBER;
+    hash = (53 * hash) + getDepartureDate().hashCode();
     hash = (37 * hash) + VACANCIES_FIELD_NUMBER;
     hash = (53 * hash) + getVacancies();
     hash = (37 * hash) + PERMITTEDDEVIATION_FIELD_NUMBER;
@@ -599,12 +599,8 @@ private static final long serialVersionUID = 0L;
 
       endCityName_ = "";
 
-      if (departureDateBuilder_ == null) {
-        departureDate_ = null;
-      } else {
-        departureDate_ = null;
-        departureDateBuilder_ = null;
-      }
+      departureDate_ = "";
+
       vacancies_ = 0;
 
       permittedDeviation_ = 0;
@@ -639,11 +635,7 @@ private static final long serialVersionUID = 0L;
       result.phoneNumber_ = phoneNumber_;
       result.startCityName_ = startCityName_;
       result.endCityName_ = endCityName_;
-      if (departureDateBuilder_ == null) {
-        result.departureDate_ = departureDate_;
-      } else {
-        result.departureDate_ = departureDateBuilder_.build();
-      }
+      result.departureDate_ = departureDate_;
       result.vacancies_ = vacancies_;
       result.permittedDeviation_ = permittedDeviation_;
       onBuilt();
@@ -710,8 +702,9 @@ private static final long serialVersionUID = 0L;
         endCityName_ = other.endCityName_;
         onChanged();
       }
-      if (other.hasDepartureDate()) {
-        mergeDepartureDate(other.getDepartureDate());
+      if (!other.getDepartureDate().isEmpty()) {
+        departureDate_ = other.departureDate_;
+        onChanged();
       }
       if (other.getVacancies() != 0) {
         setVacancies(other.getVacancies());
@@ -1052,123 +1045,80 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private com.google.protobuf.Timestamp departureDate_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder> departureDateBuilder_;
+    private java.lang.Object departureDate_ = "";
     /**
-     * <code>.google.protobuf.Timestamp departureDate = 5;</code>
-     * @return Whether the departureDate field is set.
-     */
-    public boolean hasDepartureDate() {
-      return departureDateBuilder_ != null || departureDate_ != null;
-    }
-    /**
-     * <code>.google.protobuf.Timestamp departureDate = 5;</code>
+     * <code>string departureDate = 5;</code>
      * @return The departureDate.
      */
-    public com.google.protobuf.Timestamp getDepartureDate() {
-      if (departureDateBuilder_ == null) {
-        return departureDate_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : departureDate_;
+    public java.lang.String getDepartureDate() {
+      java.lang.Object ref = departureDate_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        departureDate_ = s;
+        return s;
       } else {
-        return departureDateBuilder_.getMessage();
+        return (java.lang.String) ref;
       }
     }
     /**
-     * <code>.google.protobuf.Timestamp departureDate = 5;</code>
+     * <code>string departureDate = 5;</code>
+     * @return The bytes for departureDate.
      */
-    public Builder setDepartureDate(com.google.protobuf.Timestamp value) {
-      if (departureDateBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        departureDate_ = value;
-        onChanged();
+    public com.google.protobuf.ByteString
+        getDepartureDateBytes() {
+      java.lang.Object ref = departureDate_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        departureDate_ = b;
+        return b;
       } else {
-        departureDateBuilder_.setMessage(value);
+        return (com.google.protobuf.ByteString) ref;
       }
-
-      return this;
     }
     /**
-     * <code>.google.protobuf.Timestamp departureDate = 5;</code>
+     * <code>string departureDate = 5;</code>
+     * @param value The departureDate to set.
+     * @return This builder for chaining.
      */
     public Builder setDepartureDate(
-        com.google.protobuf.Timestamp.Builder builderForValue) {
-      if (departureDateBuilder_ == null) {
-        departureDate_ = builderForValue.build();
-        onChanged();
-      } else {
-        departureDateBuilder_.setMessage(builderForValue.build());
-      }
-
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      departureDate_ = value;
+      onChanged();
       return this;
     }
     /**
-     * <code>.google.protobuf.Timestamp departureDate = 5;</code>
-     */
-    public Builder mergeDepartureDate(com.google.protobuf.Timestamp value) {
-      if (departureDateBuilder_ == null) {
-        if (departureDate_ != null) {
-          departureDate_ =
-            com.google.protobuf.Timestamp.newBuilder(departureDate_).mergeFrom(value).buildPartial();
-        } else {
-          departureDate_ = value;
-        }
-        onChanged();
-      } else {
-        departureDateBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.google.protobuf.Timestamp departureDate = 5;</code>
+     * <code>string departureDate = 5;</code>
+     * @return This builder for chaining.
      */
     public Builder clearDepartureDate() {
-      if (departureDateBuilder_ == null) {
-        departureDate_ = null;
-        onChanged();
-      } else {
-        departureDate_ = null;
-        departureDateBuilder_ = null;
-      }
-
+      
+      departureDate_ = getDefaultInstance().getDepartureDate();
+      onChanged();
       return this;
     }
     /**
-     * <code>.google.protobuf.Timestamp departureDate = 5;</code>
+     * <code>string departureDate = 5;</code>
+     * @param value The bytes for departureDate to set.
+     * @return This builder for chaining.
      */
-    public com.google.protobuf.Timestamp.Builder getDepartureDateBuilder() {
+    public Builder setDepartureDateBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
       
+      departureDate_ = value;
       onChanged();
-      return getDepartureDateFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.google.protobuf.Timestamp departureDate = 5;</code>
-     */
-    public com.google.protobuf.TimestampOrBuilder getDepartureDateOrBuilder() {
-      if (departureDateBuilder_ != null) {
-        return departureDateBuilder_.getMessageOrBuilder();
-      } else {
-        return departureDate_ == null ?
-            com.google.protobuf.Timestamp.getDefaultInstance() : departureDate_;
-      }
-    }
-    /**
-     * <code>.google.protobuf.Timestamp departureDate = 5;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder> 
-        getDepartureDateFieldBuilder() {
-      if (departureDateBuilder_ == null) {
-        departureDateBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.google.protobuf.Timestamp, com.google.protobuf.Timestamp.Builder, com.google.protobuf.TimestampOrBuilder>(
-                getDepartureDate(),
-                getParentForChildren(),
-                isClean());
-        departureDate_ = null;
-      }
-      return departureDateBuilder_;
+      return this;
     }
 
     private int vacancies_ ;

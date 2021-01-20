@@ -220,6 +220,7 @@ public class ServerCommService extends ServerCommGrpc.ServerCommImplBase {
                     .setCommit(req.getCommit())
                     .setCancel(req.getCancel())
                     .setRequestTimestamp(req.getRequestTimestamp())
+                    .setIndex(req.getIndex())
                     .build();
             RideOffer offer = grpcClient.askRide(cityName, new_req);
             if (offer != null) {
@@ -270,7 +271,7 @@ public class ServerCommService extends ServerCommGrpc.ServerCommImplBase {
 
             // ridesVacancies.get(date).remove(req);
             //rides.remove(req);
-            //rideRequests.remove(req);
+            rideRequests.remove(matchingRideRequest);
             updateVacancies(date, rideOffer, 1);
         }
     }

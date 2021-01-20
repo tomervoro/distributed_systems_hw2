@@ -127,7 +127,7 @@ public final class ServerCommGrpc {
       fullMethodName = SERVICE_NAME + '/' + "getSnapshot",
       requestType = generated.Dummy.class,
       responseType = generated.SnapshotInfo.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<generated.Dummy,
       generated.SnapshotInfo> getGetSnapshotMethod() {
     io.grpc.MethodDescriptor<generated.Dummy, generated.SnapshotInfo> getGetSnapshotMethod;
@@ -136,7 +136,7 @@ public final class ServerCommGrpc {
         if ((getGetSnapshotMethod = ServerCommGrpc.getGetSnapshotMethod) == null) {
           ServerCommGrpc.getGetSnapshotMethod = getGetSnapshotMethod =
               io.grpc.MethodDescriptor.<generated.Dummy, generated.SnapshotInfo>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "getSnapshot"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
@@ -252,7 +252,7 @@ public final class ServerCommGrpc {
                   this, METHODID_COMMIT_OR_ABORT_RIDE_REQUEST)))
           .addMethod(
             getGetSnapshotMethod(),
-            asyncServerStreamingCall(
+            asyncUnaryCall(
               new MethodHandlers<
                 generated.Dummy,
                 generated.SnapshotInfo>(
@@ -303,7 +303,7 @@ public final class ServerCommGrpc {
      */
     public void getSnapshot(generated.Dummy request,
         io.grpc.stub.StreamObserver<generated.SnapshotInfo> responseObserver) {
-      asyncServerStreamingCall(
+      asyncUnaryCall(
           getChannel().newCall(getGetSnapshotMethod(), getCallOptions()), request, responseObserver);
     }
   }
@@ -345,9 +345,8 @@ public final class ServerCommGrpc {
 
     /**
      */
-    public java.util.Iterator<generated.SnapshotInfo> getSnapshot(
-        generated.Dummy request) {
-      return blockingServerStreamingCall(
+    public generated.SnapshotInfo getSnapshot(generated.Dummy request) {
+      return blockingUnaryCall(
           getChannel(), getGetSnapshotMethod(), getCallOptions(), request);
     }
   }
@@ -388,6 +387,14 @@ public final class ServerCommGrpc {
         generated.RideRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getCommitOrAbortRideRequestMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<generated.SnapshotInfo> getSnapshot(
+        generated.Dummy request) {
+      return futureUnaryCall(
+          getChannel().newCall(getGetSnapshotMethod(), getCallOptions()), request);
     }
   }
 
